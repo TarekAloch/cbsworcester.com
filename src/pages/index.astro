@@ -1,14 +1,24 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import CustomHeroText from '~/components/widgets/CustomHeroText.astro';
 
 const metadata = {
-  title: 'Complete Billing Solutions',
+  title: 'Complete Billing Solutions | 96-98% Collection Rate for Mental Health Providers',
+  description: 'Specialized medical billing services for mental health providers in Worcester. Increase your collection rate to 96-98% with our comprehensive billing management.',
   ignoreTitleTemplate: true,
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- Placeholder: Hero Section -->
+  <!-- Hero Section Implementation -->
+  <CustomHeroText
+    title="96-98% Collection Rate for Mental Health Providers"
+    subtitle="Complete Billing Solutions: Specialized Medical Billing Services Since 2000."
+    tagline="Over 25 Years of Dedicated Service"
+    callToAction={{ text: 'Schedule a Free Consultation', href: '#contact', icon: 'tabler:calendar-time' }}
+    callToAction2={{ text: 'Learn About Our Services', href: '#features', icon: 'tabler:info-circle' }}
+  />
+  
   <!-- Placeholder: Features Section -->
   <!-- Placeholder: Steps Section -->
   <!-- Placeholder: Why Us Section -->
