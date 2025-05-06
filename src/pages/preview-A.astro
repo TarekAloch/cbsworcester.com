@@ -1,0 +1,79 @@
+---
+// Imports
+import PageLayout from '~/layouts/PageLayout.astro';
+// import Header from '~/components/widgets/Header.astro'; // Removed
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+// import Footer from '~/components/widgets/Footer.astro'; // Removed
+
+// Metadata
+const metadata = {
+  title: 'Preview Page A - Standard Flow',
+  description: 'Visual preview of structure A.',
+  robots: {
+    index: false, // Prevent indexing of this preview page
+    follow: false,
+  }
+};
+---
+
+<PageLayout metadata={metadata}>
+  {/* Header component is NOT included here - PageLayout handles it */}
+  {/* <Header /> */}
+
+  {/* Hero Widget */}
+  <Hero
+    title="[Hero Title Placeholder - Structure A]"
+    subtitle="[Hero subtitle placeholder text describing the service concisely.]"
+    actions={[
+      { text: '[Primary Action Button]', href: '#' }
+    ]}
+  />
+
+  {/* Features Widget */}
+  <Features
+    title="[Services Section Title]"
+    columns={3}
+    items={[
+      { title: '[Service 1 Title]', description: '[Brief description of service 1.]', icon: 'tabler:check' },
+      { title: '[Service 2 Title]', description: '[Brief description of service 2.]', icon: 'tabler:check' },
+      { title: '[Service 3 Title]', description: '[Brief description of service 3.]', icon: 'tabler:check' },
+    ]}
+  />
+
+  {/* Moved comment outside tag */}
+  {/* Ensure items stack nicely if needed, or adjust ItemGrid classes */}
+  <Content
+    title="[Why Choose Us Section Title]"
+    columns={1}
+    items={[
+      { title: '[Benefit 1 Title]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 2 Title]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 3 Title]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 4 Title]', description: '[Optional brief description.]', icon: 'tabler:check' },
+    ]}
+  />
+
+  {/* Testimonials Widget */}
+  <Testimonials
+    title="[Testimonial Section Title]"
+    testimonials={[
+      { testimonial: '[Placeholder client testimonial quote goes here. Lorem ipsum dolor sit amet...]', name: '[Client Name]', job: '[Client Title/Company]' }
+    ]}
+  />
+
+  {/* CallToAction Widget */}
+  <CallToAction
+    title="[Call To Action Title Placeholder]"
+    subtitle="[Optional CTA subtitle placeholder.]"
+    actions={[
+      { text: '[Contact Us Button]', href: '#' } // Link to # for now
+    ]}
+  />
+
+  {/* Footer component is NOT included here - PageLayout handles it */}
+  {/* <Footer /> */}
+</PageLayout>

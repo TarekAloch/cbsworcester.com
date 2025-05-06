@@ -1,0 +1,62 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+// import Header from '~/components/widgets/Header.astro'; // Removed
+import Hero from '~/components/widgets/Hero.astro'; // Standard Hero
+import Features3 from '~/components/widgets/Features3.astro'; // Using Features3
+import Content from '~/components/widgets/Content.astro'; // Content for 'Why Us'
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+// import Footer from '~/components/widgets/Footer.astro'; // Removed
+
+const metadata = {
+  title: 'Preview Page C - Image Features',
+  description: 'Visual preview of structure C.',
+  robots: { index: false, follow: false }
+};
+---
+
+<PageLayout metadata={metadata}>
+  {/* Header removed - Provided by Layout */}
+  {/* <Header /> */}
+
+  <Hero
+    title="[Hero Title Placeholder - Structure C]"
+    subtitle="[Hero subtitle placeholder text C.]"
+    actions={[ { text: '[Primary Action Button C]', href: '#' } ]}
+  />
+
+  {/* Added image */}
+  <Features3
+    title="[Services Section Title - Style C]"
+    columns={3}
+    image={{ src: '~/assets/images/default.png', alt: '[Feature Section Placeholder Image]' }}
+    items={[
+      { title: '[Service 1 Title C]', description: '[Brief description of service 1.]', icon: 'tabler:check' },
+      { title: '[Service 2 Title C]', description: '[Brief description of service 2.]', icon: 'tabler:check' },
+      { title: '[Service 3 Title C]', description: '[Brief description of service 3.]', icon: 'tabler:check' },
+    ]}
+  />
+  <Content
+    title="[Why Choose Us Section Title C]"
+    columns={1}
+    items={[
+      { title: '[Benefit 1 Title C]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 2 Title C]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 3 Title C]', description: '[Optional brief description.]', icon: 'tabler:check' },
+      { title: '[Benefit 4 Title C]', description: '[Optional brief description.]', icon: 'tabler:check' },
+    ]}
+  />
+  <Testimonials
+    title="[Testimonial Section Title C]"
+    testimonials={[
+      { testimonial: '[Placeholder client testimonial quote C.]', name: '[Client Name C]', job: '[Client Title C]' }
+    ]}
+  />
+  <CallToAction
+    title="[Call To Action Title Placeholder C]"
+    actions={[ { text: '[Contact Us Button C]', href: '#' } ]}
+  />
+
+  {/* Footer removed - Provided by Layout */}
+  {/* <Footer /> */}
+</PageLayout>
