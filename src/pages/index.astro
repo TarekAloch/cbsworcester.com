@@ -1,6 +1,11 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import CustomHeroText from '~/components/widgets/CustomHeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = {
   title: 'Complete Billing Solutions | 96-98% Collection Rate for Mental Health Providers',
@@ -19,10 +24,195 @@ const metadata = {
     callToAction2={{ text: 'Learn About Our Services', href: '#features', icon: 'tabler:info-circle' }}
   />
   
-  <!-- Placeholder: Features Section -->
-  <!-- Placeholder: Steps Section -->
-  <!-- Placeholder: Why Us Section -->
-  <!-- Placeholder: Testimonials Section -->
-  <!-- Placeholder: CTA Section -->
-  <!-- Removed all widgets here -->
+  <!-- Features Section Implementation -->
+  <Features
+    id="features"
+    tagline="Our Core Strengths"
+    title="Why Mental Health Providers Choose CBS"
+    subtitle="We deliver comprehensive, specialized billing services with a personal touch, ensuring you maximize revenue and minimize administrative burdens."
+    items={[
+      {
+        title: 'Mental Health Billing Specialists',
+        description: 'Deep expertise in mental health codes, insurance nuances, and compliance, ensuring accurate and optimized claim submissions.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Industry-Leading 96-98% Collection Rate',
+        description: 'Our persistent follow-up and meticulous processes consistently achieve collection rates far exceeding the industry average.',
+        icon: 'tabler:chart-line',
+      },
+      {
+        title: 'Weekly On-Site Client Visits',
+        description: 'Regular, face-to-face meetings to proactively address concerns, review performance, and maintain strong partnerships.',
+        icon: 'tabler:users-group',
+      },
+      {
+        title: 'Comprehensive End-to-End Management',
+        description: 'From initial credentialing and fee schedule negotiation to claim submission, payment posting, and detailed reporting.',
+        icon: 'tabler:arrows-shuffle',
+      },
+    ]}
+    classes={{
+      container: 'cbs-section bg-gray-50 dark:bg-slate-900/20',
+      title: 'text-cbs-headline text-center mb-4 font-bold',
+      subtitle: 'text-cbs-subtitle text-center max-w-3xl mx-auto mb-12 md:mb-16',
+      items: 'grid md:grid-cols-2 gap-8 xl:gap-10',
+      item: 'p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center',
+      icon: 'mx-auto mb-4 flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white text-3xl',
+      itemTitle: 'text-xl font-bold text-primary dark:text-primary-400 mb-2',
+      itemDescription: 'text-gray-700 dark:text-slate-300 text-base leading-relaxed',
+    }}
+  />
+
+  <!-- Steps Section -->
+  <Steps
+    id="process"
+    tagline="Our Process"
+    title="How We Maximize Your Collections"
+    subtitle="Our meticulous approach ensures industry-leading collection rates through these key steps:"
+    items={[
+      {
+        title: 'Weekly Client Visits',
+        description: 'We maintain regular communication to address issues promptly',
+        icon: 'tabler:calendar-stats',
+      },
+      {
+        title: 'Insurance Verification',
+        description: 'Continuous eligibility checks before service delivery',
+        icon: 'tabler:clipboard-check',
+      },
+      {
+        title: 'Electronic Submission',
+        description: 'Direct submission to insurance carriers',
+        icon: 'tabler:send',
+      },
+      {
+        title: 'Authorization Management',
+        description: 'Tracking requirements and expiration dates',
+        icon: 'tabler:clock',
+      },
+      {
+        title: 'Claim Follow-up',
+        description: 'Persistent pursuit of denied or delayed claims',
+        icon: 'tabler:refresh',
+      },
+    ]}
+    classes={{
+      container: 'cbs-section',
+      title: 'text-cbs-headline text-center mb-4 font-bold',
+      subtitle: 'text-cbs-subtitle text-center max-w-3xl mx-auto mb-12',
+      items: 'relative flex flex-col gap-6 md:gap-8',
+      item: 'flex',
+      icon: 'flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white text-xl mr-4 mt-1',
+      itemTitle: 'text-xl font-semibold text-primary dark:text-primary-400',
+      itemDescription: 'text-gray-700 dark:text-slate-300 leading-relaxed'
+    }}
+  />
+
+  <!-- Why Us Section -->
+  <Stats
+    id="whyus"
+    tagline="Why Choose CBS"
+    title="Proven Track Record of Excellence"
+    subtitle="Our commitment to specialized, high-touch service delivers measurable results:"
+    stats={[
+      { title: 'Years in Business', amount: '20+' },
+      { title: 'Collection Rate', amount: '96-98%' },
+      { title: 'Fee Structure', amount: '5-8%' },
+      { title: 'HIPAA Compliance', amount: '100%' },
+      { title: 'Client Visits', amount: 'Weekly' },
+    ]}
+    classes={{
+      container: 'cbs-section bg-gray-50 dark:bg-slate-900/20',
+      title: 'text-cbs-headline text-center mb-4 font-bold',
+      subtitle: 'text-cbs-subtitle text-center max-w-3xl mx-auto mb-12',
+      stats: 'grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5',
+      stat: 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 text-center',
+      amount: 'font-bold text-4xl lg:text-5xl text-primary dark:text-primary-400',
+      title: 'text-gray-700 dark:text-slate-300 mt-2'
+    }}
+  />
+
+  <!-- Testimonials Section -->
+  <Testimonials
+    id="testimonials"
+    tagline="Client Success Stories"
+    title="What Mental Health Providers Say"
+    subtitle="Hear directly from practices that have transformed their billing processes with our services:"
+    testimonials={[
+      {
+        title: 'Dr. Sarah Johnson',
+        description: 'Clinical Psychologist',
+        content: "Complete Billing Solutions increased our collection rate from 75% to 97% within just three months. Their weekly visits ensure we're always on the same page.",
+      },
+      {
+        title: 'Dr. Michael Chen',
+        description: 'Psychiatric Practice Owner',
+        content: "Their expertise in mental health billing codes has made a tremendous difference. We've recaptured revenue we didn't even know we were missing.",
+      },
+      {
+        title: 'Worcester Therapy Associates',
+        description: 'Group Practice',
+        content: "Since partnering with CBS, our administrative burden has decreased while our collections have increased. The 5% fee structure has more than paid for itself.",
+      },
+    ]}
+    classes={{
+      container: 'cbs-section',
+      title: 'text-cbs-headline text-center mb-4 font-bold',
+      subtitle: 'text-cbs-subtitle text-center max-w-3xl mx-auto mb-12',
+      testimonials: 'grid gap-8 md:grid-cols-3 items-stretch',
+      testimonial: 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 flex flex-col',
+      title: 'font-semibold text-lg text-primary dark:text-primary-400',
+      description: 'text-muted dark:text-slate-400 text-sm mb-3',
+      content: 'flex-grow text-gray-700 dark:text-slate-300 italic leading-relaxed',
+    }}
+  />
+
+  <!-- CTA Section -->
+  <CallToAction
+    id="contact"
+    title="Discover Your Practice's Collection Potential"
+    subtitle="Contact us for a billing assessment and discover how we can improve your collection rate"
+    callToAction={{
+      text: 'Schedule Your Free Consultation',
+      href: '#',
+      icon: 'tabler:calendar-time',
+    }}
+    classes={{
+      container: 'cbs-section bg-primary-900 text-white',
+      title: 'text-white font-bold mb-2',
+      subtitle: 'text-blue-100 mb-8 mx-auto max-w-3xl',
+      actions: 'flex flex-col sm:flex-row sm:justify-center gap-4',
+      button: 'bg-white text-primary font-semibold hover:bg-blue-50',
+    }}
+  />
 </Layout>
+
+<style is:global>
+  :root {
+    --cbs-primary: #0057B8;
+    --cbs-primary-light: #00A0DF;
+    --cbs-accent: #FFB81C;
+    
+    /* Typography colors */
+    --cbs-headline: #333333;
+    --cbs-subtitle: #666666;
+  }
+  
+  .dark {
+    --cbs-headline: #ffffff;
+    --cbs-subtitle: #e0e0e0;
+  }
+  
+  .cbs-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  @media (min-width: 768px) {
+    .cbs-section {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+</style>

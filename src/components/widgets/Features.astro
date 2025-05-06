@@ -27,10 +27,11 @@ const {
     columns={columns}
     defaultIcon={defaultIcon}
     classes={{
-      container: '',
-      title: 'md:text-[1.3rem]',
-      icon: 'text-white bg-primary rounded-full w-10 h-10 p-2 md:w-12 md:h-12 md:p-3 mr-4 rtl:ml-4 rtl:mr-0',
-      ...((classes?.items as Record<string, never>) ?? {}),
+      container: classes?.items as string,
+      panel: classes?.item as string,
+      title: classes?.itemTitle as string,
+      description: classes?.itemDescription as string,
+      icon: classes?.icon as string,
     }}
   />
 </WidgetWrapper>
