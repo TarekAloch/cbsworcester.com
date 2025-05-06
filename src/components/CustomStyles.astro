@@ -20,44 +20,66 @@ import '@fontsource-variable/inter';
 ---
 
 <style is:inline>
+  /* Medical Professional Blues Palette */
   :root {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Montserrat', sans-serif; /* Set default sans font */
+    --aw-font-serif: serif; /* Keep a generic serif */
+    --aw-font-heading: 'Montserrat', sans-serif; /* Set heading font */
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: #0057B8; /* Deep Blue - Primary */
+    --aw-color-secondary: #00A0DF; /* Light Blue - Secondary */
+    --aw-color-accent: #FFB81C; /* Gold - Accent for CTAs */
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: #1F2937; /* Dark Gray Heading (adjust as needed) */
+    --aw-color-text-default: #333333; /* Dark Gray - Main text */
+    --aw-color-text-muted: #616161; /* Medium Gray - Secondary text */
+    --aw-color-bg-page: #F5F7FA; /* Light Gray - Background */
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
-
-    ::selection {
-      background-color: lavender;
-    }
+    /* Ensure dark mode defaults exist even if not fully themed yet */
+    /* Basic dark mode text/bg (can be refined later) */
+    --aw-color-text-heading-dark: #E5E7EB;
+    --aw-color-text-default-dark: #D1D5DB;
+    --aw-color-text-muted-dark: #9CA3AF;
+    --aw-color-bg-page-dark: #111827;
   }
 
+  /* Basic Dark Mode Colors (Copy primary/secondary/accent for now, refine later if dark mode is implemented) */
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Montserrat', sans-serif;
+    --aw-font-serif: serif;
+    --aw-font-heading: 'Montserrat', sans-serif;
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: #0057B8;
+    --aw-color-secondary: #00A0DF;
+    --aw-color-accent: #FFB81C;
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-heading: var(--aw-color-text-heading-dark);
+    --aw-color-text-default: var(--aw-color-text-default-dark);
+    --aw-color-text-muted: var(--aw-color-text-muted-dark);
+    --aw-color-bg-page: var(--aw-color-bg-page-dark);
+  }
 
-    ::selection {
-      background-color: black;
-      color: snow;
-    }
+  ::selection {
+    background-color: var(--aw-color-secondary);
+    color: white;
+  }
+  .dark ::selection {
+     background-color: var(--aw-color-accent);
+     color: black;
+  }
+
+  /* Custom CBS Utility Classes */
+  .text-cbs-headline {
+    @apply text-4xl font-bold tracking-tight text-[color:var(--aw-color-text-heading)] md:text-5xl;
+    font-family: var(--aw-font-heading);
+  }
+
+  .text-cbs-subtitle {
+    @apply text-xl text-[color:var(--aw-color-text-muted)] dark:text-[color:var(--aw-color-text-muted-dark)];
+    font-family: var(--aw-font-sans);
+  }
+
+  .cbs-section {
+    @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-20; /* Consistent section padding */
   }
 </style>
