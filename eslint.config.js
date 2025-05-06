@@ -54,6 +54,15 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro'],
+    ignores: [
+      'dist',
+      'node_modules',
+      '.github',
+      'types.generated.d.ts',
+      '.astro',
+      'Visual_Web_Testing_Framework/**',
+      'docs/**',
+      'temp_widgets_txt/**',
+    ],
   },
 ];
