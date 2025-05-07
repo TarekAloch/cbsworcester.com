@@ -72,16 +72,17 @@ const cbsCollectionRate = 97; // CBS average
       <div class="max-w-3xl mx-auto bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/30 dark:to-blue-900/30 rounded-xl p-8 shadow-md">
         <h3 class="text-2xl font-bold text-center text-primary dark:text-primary-400 mb-6">Calculate Your Revenue Potential</h3>
         <p class="text-center mb-8">See the financial impact a 96-98% collection rate could have on your practice:</p>
-        
+        <div class="text-center mb-8">
+          <span class="inline-block bg-primary text-white px-4 py-2 rounded-full font-medium">CBS Difference</span>
+        </div>
         <div class="grid md:grid-cols-3 gap-6 text-center">
           <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
             <h4 class="font-semibold mb-2">Industry Average</h4>
             <p class="text-4xl font-bold text-gray-500">{avgCollectionRate}%</p>
             <p class="mt-2 text-gray-600 dark:text-gray-400">Collection Rate</p>
           </div>
-          
+      
           <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm relative">
-            <div class="absolute -top-3 -right-3 bg-primary text-white text-xs px-2 py-1 rounded-full">CBS Difference</div>
             <h4 class="font-semibold mb-2">With CBS</h4>
             <p class="text-4xl font-bold text-primary">{cbsCollectionRate}%</p>
             <p class="mt-2 text-primary-600 dark:text-primary-400">Collection Rate</p>
@@ -232,7 +233,7 @@ const cbsCollectionRate = 97; // CBS average
       stats: 'grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5',
       stat: 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 text-center transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
       amount: 'font-bold text-4xl lg:text-5xl text-primary dark:text-primary-400',
-      title: 'text-gray-700 dark:text-slate-300 mt-2'
+      statTitle: 'text-gray-700 dark:text-slate-300 mt-2'
     }}
   />
 
