@@ -5,7 +5,6 @@ import Features from '~/components/widgets/Features.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 import Content from '~/components/widgets/Content.astro';
 
 const metadata = {
@@ -35,11 +34,44 @@ const avgCollectionRate = 75; // Industry average
 const cbsCollectionRate = 97; // CBS average
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} showHeader={false}>
   <!-- Quick Navigation Links -->
   <div class="bg-primary-100 dark:bg-slate-800 py-2 text-sm text-center sticky top-0 z-50 shadow-md">
-    <div class="container mx-auto">
-      <ul class="flex justify-center space-x-6 text-primary-600 dark:text-primary-200">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <div class="flex items-center">
+        <span class="text-2xl font-bold text-gray-900 dark:text-white">🚀</span>
+        <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">Complete Billing Solutions</span>
+      </div>
+      <ul class="hidden md:flex justify-center space-x-6 text-primary-600 dark:text-primary-200">
+        <li><a href="#features" class="hover:underline">Our Services</a></li>
+        <li><a href="#process" class="hover:underline">Our Process</a></li>
+        <li><a href="#whyus" class="hover:underline">Why Choose Us</a></li>
+        <li><a href="#testimonials" class="hover:underline">Success Stories</a></li>
+        <li><a href="#contact" class="hover:underline">Contact Us</a></li>
+      </ul>
+      <div class="flex items-center">
+        <button 
+          type="button" 
+          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center" 
+          aria-label="Toggle between Dark and Light mode" 
+          data-aw-toggle-color-scheme
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun dark:hidden w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+            <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon hidden dark:inline-block w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="md:hidden pt-2">
+      <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-primary-600 dark:text-primary-200 text-xs">
         <li><a href="#features" class="hover:underline">Our Services</a></li>
         <li><a href="#process" class="hover:underline">Our Process</a></li>
         <li><a href="#whyus" class="hover:underline">Why Choose Us</a></li>
@@ -322,23 +354,28 @@ const cbsCollectionRate = 97; // CBS average
   />
 
   <!-- CTA Section -->
-  <CallToAction
-    id="contact"
-    title="Discover Your Practice's Collection Potential"
-    subtitle="Contact us for a billing assessment and discover how we can improve your collection rate"
-    callToAction={{
-      text: 'Schedule Your Free Consultation',
-      href: '#',
-      icon: 'tabler:calendar-time',
-    }}
-    classes={{
-      container: 'cbs-section bg-primary-900 text-white',
-      title: 'text-white font-bold mb-2 text-3xl',
-      subtitle: 'text-blue-100 mb-8 mx-auto max-w-3xl',
-      actions: 'flex flex-col sm:flex-row sm:justify-center gap-4',
-      button: 'bg-white text-primary font-semibold hover:bg-blue-50',
-    }}
-  />
+  <div class="cbs-section bg-primary-900">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mx-auto text-center p-8 rounded-md shadow-xl bg-primary-900">
+        <h2 class="text-3xl font-bold mb-4 text-white">Discover Your Practice's Collection Potential</h2>
+        <p class="text-white text-opacity-90 mb-8 mx-auto max-w-3xl">Contact us for a billing assessment and discover how we can improve your collection rate</p>
+        <div class="flex flex-col sm:flex-row sm:justify-center gap-4">
+          <a href="#" class="inline-flex items-center justify-center bg-white text-primary-700 font-semibold hover:bg-blue-50 px-6 py-3 rounded-md transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time w-5 h-5 mr-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
+              <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+              <path d="M15 3v4"></path>
+              <path d="M7 3v4"></path>
+              <path d="M3 11h16"></path>
+              <path d="M18 16.496v1.504l1 1"></path>
+            </svg>
+            Schedule Your Free Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Floating Contact Button -->
   <div class="fixed bottom-8 right-8 z-50">

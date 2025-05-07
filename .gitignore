@@ -64,3 +64,5 @@ temp_widgets_txt/
 
 # Workspace files (Added by Gemini/User)
 *.code-workspace
+
+**/CLAUDE.local.md
