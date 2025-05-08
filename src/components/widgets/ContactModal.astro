@@ -112,15 +112,65 @@
 
 {/* Modal JavaScript - Now part of the component */}
 <script>
-  declare global {
-    interface Window {
-      __openModalListenerAttached?: boolean; // Declare our custom flag as optional boolean
+  // Define variables and functions in the script's top-level scope
+  let modalElement: HTMLElement | null = null;
+  let modalContentElement: Element | null = null;
+
+  function findModalElements() {
+    modalElement = document.getElementById('contact-modal') as HTMLElement | null;
+    modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
+    // Return true if elements were found, false otherwise
+    return !!(modalElement && modalContentElement);
+  }
+
+  function openModal() {
+    // Attempt to find elements *just in case* they weren't found before
+    if (!modalElement && !findModalElements()) {
+      console.warn('Cannot open modal: elements not found.');
+      return;
+    }
+    // Ensure TS knows elements are potentially non-null now (though findModalElements guarantees it if true)
+    if (!modalElement || !modalContentElement) return;
+
+    if (modalElement.classList.contains('hidden')) {
+      document.body.classList.add('overflow-hidden');
+      modalElement.classList.remove('hidden');
+      void modalElement.offsetWidth;
+      modalElement.classList.remove('opacity-0');
+      modalContentElement.classList.remove('opacity-0', 'scale-95');
+      modalContentElement.classList.add('opacity-100', 'scale-100');
     }
   }
 
-  // Define functions in a scope accessible by the event listeners
-  let modalElement: HTMLElement | null;
-  let modalContentElement: Element | null;
+  function closeModal() {
+    if (!modalElement || !modalContentElement) return;
+
+    if (!modalElement.classList.contains('hidden')) {
+      document.body.classList.remove('overflow-hidden');
+      modalElement.classList.add('opacity-0');
+      modalContentElement.classList.add('opacity-0', 'scale-95');
+      modalContentElement.classList.remove('opacity-100', 'scale-100');
+
+      const transitionDuration = 500;
+      setTimeout(() => {
+        if (modalElement) modalElement.classList.add('hidden');
+      }, transitionDuration);
+    }
+  }
+
+  function handleEscKey(event: KeyboardEvent) {
+    if (event.key === 'Escape' && modalElement && !modalElement.classList.contains('hidden')) {
+      closeModal();
+    }
+  }
+
+  function closeModalOnOverlay(event: MouseEvent) {
+    const target = event.target; // Define target
+    if (modalElement && target instanceof Node && target === modalElement) {
+      // Added type check for safety
+      closeModal();
+    }
+  }
 
   // --- Form submission handler ---
   async function handleSubmit(event: SubmitEvent) {
@@ -184,121 +234,72 @@
     }
   }
 
-  function openModal() {
-    if (!modalElement || !modalContentElement) {
-      console.warn('Attempted to open modal, but elements not initialized.');
-      return;
-    }
+  function setupModalCloseListeners() {
+    // This function *only* attaches listeners related to closing
+    // It assumes modalElement is already found by the caller
+    if (!modalElement) return; // Guard
 
-    if (modalElement.classList.contains('hidden')) {
-      document.body.classList.add('overflow-hidden');
-      modalElement.classList.remove('hidden');
-      void modalElement.offsetWidth; // Force reflow
-      modalElement.classList.remove('opacity-0');
-      modalContentElement.classList.remove('opacity-0', 'scale-95');
-      modalContentElement.classList.add('opacity-100', 'scale-100');
-    }
-  }
-
-  function closeModal() {
-    if (!modalElement || !modalContentElement) {
-      console.warn('Attempted to close modal, but elements not initialized.');
-      return;
-    }
-
-    if (!modalElement.classList.contains('hidden')) {
-      document.body.classList.remove('overflow-hidden');
-      modalElement.classList.add('opacity-0');
-      modalContentElement.classList.add('opacity-0', 'scale-95');
-      modalContentElement.classList.remove('opacity-100', 'scale-100');
-
-      const transitionDuration = 500;
-      setTimeout(() => {
-        if (modalElement) modalElement.classList.add('hidden');
-      }, transitionDuration);
-    }
-  }
-
-  function handleEscKey(event: KeyboardEvent) {
-    if (event.key === 'Escape' && modalElement && !modalElement.classList.contains('hidden')) {
-      closeModal();
-    }
-  }
-
-  function closeModalOnOverlay(event: MouseEvent) {
-    const target = event.target; // Define target
-    // Check if modalElement is the direct target of the click (i.e., the overlay itself)
-    if (modalElement && target === modalElement) {
-      closeModal();
-    }
-  }
-
-  // This function will find elements and attach listeners that need to be on specific modal parts
-  function initializeModalInteractivity() {
-    modalElement = document.getElementById('contact-modal') as HTMLElement | null; // Added type assertion hint
-    modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
     const closeModalButton = document.getElementById('close-contact-modal-button');
 
+    // Setup form submission
     const form = document.getElementById('contact-cbs-form') as HTMLFormElement | null; // Get form
-    const formStatus = document.getElementById('form-status'); // Get status div
-    const submitButton = form ? form.querySelector('button[type=submit]') : null; // Get submit button
-
-    if (!modalElement || !modalContentElement || !closeModalButton || !form || !formStatus || !submitButton) {
-      console.warn('Modal elements or form elements not found. Interactivity might be affected.');
-      return;
+    if (form) {
+      form.removeEventListener('submit', handleSubmit); // Prevent duplicates
+      form.addEventListener('submit', handleSubmit);
     }
 
-    // --- Attach listeners that are specific to the modal's internal elements ---
-    closeModalButton.removeEventListener('click', closeModal);
-    closeModalButton.addEventListener('click', closeModal);
+    if (closeModalButton) {
+      closeModalButton.removeEventListener('click', closeModal);
+      closeModalButton.addEventListener('click', closeModal);
+    }
 
     modalElement.removeEventListener('click', closeModalOnOverlay);
     modalElement.addEventListener('click', closeModalOnOverlay);
 
-    document.removeEventListener('keydown', handleEscKey);
+    document.removeEventListener('keydown', handleEscKey); // Manage global listener
     document.addEventListener('keydown', handleEscKey);
-
-    // Attach AJAX submit listener
-    form.removeEventListener('submit', handleSubmit); // Prevent duplicates
-    form.addEventListener('submit', handleSubmit);
-
-    console.log('Modal interactivity initialized, including AJAX form handler.');
+    console.log('Close listeners attached.');
   }
 
-  // --- Attach listeners that should only be set up ONCE and use event delegation ---
-  // Check a global flag to ensure this runs only once across the entire application lifecycle,
-  // even if the component script re-runs (which it might with client directives).
-  if (!window.__openModalListenerAttached) {
+  // --- Event Delegation for OPENING ---
+  // Attach ONCE to the body. Use a flag to be sure.
+  let isDelegatedOpenListenerAttached = false;
+  if (!isDelegatedOpenListenerAttached && typeof document !== 'undefined') {
+    // Add check for document
     document.body.addEventListener('click', function (event: MouseEvent) {
-      // Added type for event
       const target = event.target;
       if (target && target instanceof Element) {
         const openButton = target.closest('.js-open-contact-modal');
         if (openButton) {
           event.preventDefault();
-          if (!modalElement) {
-            // Re-check if modal is initialized if open is clicked early
-            initializeModalInteractivity();
+          // Ensure elements are found *before* trying to open
+          if (findModalElements()) {
+            openModal();
+          } else {
+            console.warn('Clicked open button, but modal elements not found on page.');
           }
-          openModal();
         }
       }
     });
-    window.__openModalListenerAttached = true; // Set global flag
-    console.log('Delegated open modal listener attached to body.');
+    isDelegatedOpenListenerAttached = true;
+    console.log('Delegated open modal listener attached.');
   }
 
-  // Run initialization logic after Astro has loaded the page content for THIS component's script
-  // Note: This depends on the client:* directive used when importing this component.
-  // If using client:load or client:idle, this script runs early.
-  // If using client:visible, it runs when the (potentially invisible) modal enters viewport.
-  // 'astro:page-load' might still be relevant if the component *persists* across navigation.
-  // Let's stick to initializing when the script runs for the component.
-  initializeModalInteractivity();
-  // document.addEventListener('astro:page-load', initializeModalInteractivity); // Re-adding this might cause duplicate ESC/Overlay listeners if component persists
-
-  // Clean up listeners when the component is unloaded (Astro specific for islands)
-  // This is more advanced, but good practice if the component could truly unmount.
-  // For a modal always potentially available, maybe not strictly needed unless using client:visible.
-  // Example: return () => { document.removeEventListener('keydown', handleEscKey); } // Requires script setup context
+  // --- Initialization on page load (Astro specific) ---
+  if (typeof document !== 'undefined') {
+    // Add check for document
+    document.addEventListener('astro:page-load', () => {
+      console.log('astro:page-load triggered on:', window.location.pathname);
+      // Find modal elements on this page load
+      if (findModalElements()) {
+        // If found, set up the listeners specific to closing it
+        console.log('Modal elements found, setting up close listeners.');
+        setupModalCloseListeners();
+      } else {
+        console.log('Modal elements NOT found on this page.');
+        // Optional: potentially remove global listeners if modal is no longer present
+        document.removeEventListener('keydown', handleEscKey);
+      }
+    });
+  }
 </script>

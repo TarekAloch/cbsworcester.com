@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import CustomHeader from '~/components/widgets/CustomHeader.astro';
+import ContactModal from '~/components/widgets/ContactModal.astro';
 
 import type { MetaData } from '~/types';
 
@@ -27,4 +28,5 @@ const metadata: MetaData = {
       <slot />
     </div>
   </section>
+  <ContactModal client:idle />
 </Layout>
