@@ -9,7 +9,8 @@ import Content from '~/components/widgets/Content.astro';
 
 const metadata = {
   title: 'Complete Billing Solutions | 96-98% Collection Rate for Mental Health Providers',
-  description: 'Specialized medical billing services for mental health providers in Worcester. Increase your collection rate to 96-98% with our comprehensive billing management.',
+  description:
+    'Specialized medical billing services for mental health providers in Worcester. Increase your collection rate to 96-98% with our comprehensive billing management.',
   ignoreTitleTemplate: true,
 };
 
@@ -17,15 +18,18 @@ const metadata = {
 const faqs = [
   {
     title: 'How does CBS achieve a 96-98% collection rate?',
-    description: 'Our exceptionally high collection rate comes from our weekly on-site visits, continuous insurance eligibility verification, electronic submission, and persistent follow-up on denied claims. This comprehensive approach allows us to address issues promptly and maximize revenue recovery.'
+    description:
+      'Our exceptionally high collection rate comes from our weekly on-site visits, continuous insurance eligibility verification, electronic submission, and persistent follow-up on denied claims. This comprehensive approach allows us to address issues promptly and maximize revenue recovery.',
   },
   {
     title: 'What makes CBS different from other medical billing services?',
-    description: 'Unlike general billing services, we specialize exclusively in mental health billing requirements. Our focused expertise, weekly client visits, and 20+ years of industry experience allow us to navigate the specific challenges of mental health billing more effectively.'
+    description:
+      'Unlike general billing services, we specialize exclusively in mental health billing requirements. Our focused expertise, weekly client visits, and 20+ years of industry experience allow us to navigate the specific challenges of mental health billing more effectively.',
   },
   {
     title: 'What is your fee structure?',
-    description: 'Our fee structure ranges from 5-8% of collections, depending on the specific services required. This is typically lower than the industry average of 7-12%, and our high collection rate ensures you receive more revenue even after our fees.'
+    description:
+      'Our fee structure ranges from 5-8% of collections, depending on the specific services required. This is typically lower than the industry average of 7-12%, and our high collection rate ensures you receive more revenue even after our fees.',
   },
 ];
 
@@ -50,25 +54,47 @@ const cbsCollectionRate = 97; // CBS average
         <li><a href="#contact" class="hover:underline">Contact Us</a></li>
       </ul>
       <div class="flex items-center">
-        <button 
-          type="button" 
-          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center" 
-          aria-label="Toggle between Dark and Light mode" 
+        <button
+          type="button"
+          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+          aria-label="Toggle between Dark and Light mode"
           data-aw-toggle-color-scheme
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun dark:hidden w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-sun dark:hidden w-5 h-5"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
             <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
           </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon hidden dark:inline-block w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-moon hidden dark:inline-block w-5 h-5"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
           </svg>
         </button>
       </div>
     </div>
-    
+
     <!-- Mobile Navigation Menu -->
     <div class="md:hidden pt-2">
       <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-primary-600 dark:text-primary-200 text-xs">
@@ -84,9 +110,16 @@ const cbsCollectionRate = 97; // CBS average
   <!-- Hero Section Implementation -->
   <div class="relative overflow-hidden">
     <!-- Background Pattern -->
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-900/5 to-primary-500/10 dark:from-primary-900/20 dark:to-primary-500/30 z-0"></div>
-    <div class="absolute inset-0 opacity-30 dark:opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230057B8\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-    
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-primary-900/5 to-primary-500/10 dark:from-primary-900/20 dark:to-primary-500/30 z-0"
+    >
+    </div>
+    <div
+      class="absolute inset-0 opacity-30 dark:opacity-20"
+      style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230057B8\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+    >
+    </div>
+
     <div class="relative z-10">
       <CustomHeroText
         title="<span class='text-6xl md:text-7xl font-extrabold text-primary'>96-98%</span> Collection Rate for Mental Health Providers"
@@ -97,12 +130,16 @@ const cbsCollectionRate = 97; // CBS average
       />
     </div>
   </div>
-  
+
   <!-- Calculate Your Savings Widget -->
   <div class="cbs-section bg-white dark:bg-slate-900 border-t border-b border-gray-100 dark:border-gray-800">
     <div class="container mx-auto">
-      <div class="max-w-3xl mx-auto bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/30 dark:to-blue-900/30 rounded-xl p-8 shadow-md">
-        <h3 class="text-2xl font-bold text-center text-primary dark:text-primary-400 mb-6">Calculate Your Revenue Potential</h3>
+      <div
+        class="max-w-3xl mx-auto bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/30 dark:to-blue-900/30 rounded-xl p-8 shadow-md"
+      >
+        <h3 class="text-2xl font-bold text-center text-primary dark:text-primary-400 mb-6">
+          Calculate Your Revenue Potential
+        </h3>
         <p class="text-center mb-8">See the financial impact a 96-98% collection rate could have on your practice:</p>
         <div class="text-center mb-8">
           <span class="inline-block bg-primary text-white px-4 py-2 rounded-full font-medium">CBS Difference</span>
@@ -113,27 +150,31 @@ const cbsCollectionRate = 97; // CBS average
             <p class="text-4xl font-bold text-gray-500">{avgCollectionRate}%</p>
             <p class="mt-2 text-gray-600 dark:text-gray-400">Collection Rate</p>
           </div>
-      
+
           <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm relative">
             <h4 class="font-semibold mb-2">With CBS</h4>
             <p class="text-4xl font-bold text-primary">{cbsCollectionRate}%</p>
             <p class="mt-2 text-primary-600 dark:text-primary-400">Collection Rate</p>
           </div>
-          
+
           <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
             <h4 class="font-semibold mb-2">Additional Revenue</h4>
             <p class="text-4xl font-bold text-green-600">+22%</p>
             <p class="mt-2 text-green-700 dark:text-green-500">Average Increase</p>
           </div>
         </div>
-        
+
         <div class="mt-8 text-center">
-          <p class="italic text-gray-700 dark:text-gray-300">For a practice billing $500,000 annually, this could mean an additional <span class="font-bold text-green-600">$110,000</span> in revenue!</p>
+          <p class="italic text-gray-700 dark:text-gray-300">
+            For a practice billing $500,000 annually, this could mean an additional <span
+              class="font-bold text-green-600">$110,000</span
+            > in revenue!
+          </p>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Features Section Implementation -->
   <Features
     id="features"
@@ -143,22 +184,26 @@ const cbsCollectionRate = 97; // CBS average
     items={[
       {
         title: 'Mental Health Billing Specialists',
-        description: 'Deep expertise in mental health codes, insurance nuances, and compliance, ensuring accurate and optimized claim submissions.',
+        description:
+          'Deep expertise in mental health codes, insurance nuances, and compliance, ensuring accurate and optimized claim submissions.',
         icon: 'tabler:brain',
       },
       {
         title: 'Industry-Leading 96-98% Collection Rate',
-        description: 'Our persistent follow-up and meticulous processes consistently achieve collection rates far exceeding the industry average.',
+        description:
+          'Our persistent follow-up and meticulous processes consistently achieve collection rates far exceeding the industry average.',
         icon: 'tabler:chart-line',
       },
       {
         title: 'Weekly On-Site Client Visits',
-        description: 'Regular, face-to-face meetings to proactively address concerns, review performance, and maintain strong partnerships.',
+        description:
+          'Regular, face-to-face meetings to proactively address concerns, review performance, and maintain strong partnerships.',
         icon: 'tabler:users-group',
       },
       {
         title: 'Comprehensive End-to-End Management',
-        description: 'From initial credentialing and fee schedule negotiation to claim submission, payment posting, and detailed reporting.',
+        description:
+          'From initial credentialing and fee schedule negotiation to claim submission, payment posting, and detailed reporting.',
         icon: 'tabler:arrows-shuffle',
       },
     ]}
@@ -179,7 +224,13 @@ const cbsCollectionRate = 97; // CBS average
     <div class="py-4 flex items-center">
       <div class="flex-grow h-px bg-gray-200 dark:bg-gray-700"></div>
       <div class="flex-shrink mx-4">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="w-6 h-6 text-primary"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg>
       </div>
@@ -228,7 +279,7 @@ const cbsCollectionRate = 97; // CBS average
       item: 'flex',
       icon: 'flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white text-xl mr-4 mt-1',
       itemTitle: 'text-xl font-semibold text-primary dark:text-primary-400',
-      itemDescription: 'text-gray-700 dark:text-slate-300 leading-relaxed'
+      itemDescription: 'text-gray-700 dark:text-slate-300 leading-relaxed',
     }}
   />
 
@@ -237,7 +288,13 @@ const cbsCollectionRate = 97; // CBS average
     <div class="py-4 flex items-center">
       <div class="flex-grow h-px bg-gray-200 dark:bg-gray-700"></div>
       <div class="flex-shrink mx-4">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="w-6 h-6 text-primary"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg>
       </div>
@@ -265,7 +322,7 @@ const cbsCollectionRate = 97; // CBS average
       stats: 'grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5',
       stat: 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 text-center transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
       amount: 'font-bold text-4xl lg:text-5xl text-primary dark:text-primary-400',
-      statTitle: 'text-gray-700 dark:text-slate-300 mt-2'
+      statTitle: 'text-gray-700 dark:text-slate-300 mt-2',
     }}
   />
 
@@ -274,7 +331,13 @@ const cbsCollectionRate = 97; // CBS average
     <div class="py-4 flex items-center">
       <div class="flex-grow h-px bg-gray-200 dark:bg-gray-700"></div>
       <div class="flex-shrink mx-4">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="w-6 h-6 text-primary"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg>
       </div>
@@ -285,13 +348,31 @@ const cbsCollectionRate = 97; // CBS average
   <!-- Client Logos Section -->
   <div class="cbs-section bg-white dark:bg-slate-900 py-12">
     <div class="container mx-auto">
-      <h2 class="text-2xl font-bold text-center text-cbs-headline mb-8">Trusted by Mental Health Providers Across Worcester</h2>
+      <h2 class="text-2xl font-bold text-center text-cbs-headline mb-8">
+        Trusted by Mental Health Providers Across Worcester
+      </h2>
       <div class="flex flex-wrap justify-center items-center gap-8 opacity-70">
         <!-- Placeholder logos - replace with actual client logos if available -->
-        <div class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">Client Logo</div>
-        <div class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">Client Logo</div>
-        <div class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">Client Logo</div>
-        <div class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">Client Logo</div>
+        <div
+          class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400"
+        >
+          Client Logo
+        </div>
+        <div
+          class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400"
+        >
+          Client Logo
+        </div>
+        <div
+          class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400"
+        >
+          Client Logo
+        </div>
+        <div
+          class="w-40 h-16 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400"
+        >
+          Client Logo
+        </div>
       </div>
     </div>
   </div>
@@ -299,9 +380,19 @@ const cbsCollectionRate = 97; // CBS average
   <!-- Testimonials Section with Improved Design -->
   <div class="cbs-section relative overflow-hidden">
     <!-- Background elements -->
-    <div class="absolute top-10 left-10 text-9xl text-primary/10 dark:text-primary/5" style="font-family: serif, Georgia;">"</div>
-    <div class="absolute bottom-10 right-10 text-9xl text-primary/10 dark:text-primary/5" style="font-family: serif, Georgia;">"</div>
-    
+    <div
+      class="absolute top-10 left-10 text-9xl text-primary/10 dark:text-primary/5"
+      style="font-family: serif, Georgia;"
+    >
+      "
+    </div>
+    <div
+      class="absolute bottom-10 right-10 text-9xl text-primary/10 dark:text-primary/5"
+      style="font-family: serif, Georgia;"
+    >
+      "
+    </div>
+
     <Testimonials
       id="testimonials"
       tagline="Client Success Stories"
@@ -311,17 +402,20 @@ const cbsCollectionRate = 97; // CBS average
         {
           title: 'Dr. Sarah Johnson',
           job: 'Clinical Psychologist',
-          testimonial: "Complete Billing Solutions increased our collection rate from 75% to 97% within just three months. Their weekly visits ensure we're always on the same page.",
+          testimonial:
+            "Complete Billing Solutions increased our collection rate from 75% to 97% within just three months. Their weekly visits ensure we're always on the same page.",
         },
         {
           title: 'Dr. Michael Chen',
           job: 'Psychiatric Practice Owner',
-          testimonial: "Their expertise in mental health billing codes has made a tremendous difference. We've recaptured revenue we didn't even know we were missing.",
+          testimonial:
+            "Their expertise in mental health billing codes has made a tremendous difference. We've recaptured revenue we didn't even know we were missing.",
         },
         {
           title: 'Worcester Therapy Associates',
           job: 'Group Practice',
-          testimonial: "Since partnering with CBS, our administrative burden has decreased while our collections have increased. The 5% fee structure has more than paid for itself.",
+          testimonial:
+            'Since partnering with CBS, our administrative burden has decreased while our collections have increased. The 5% fee structure has more than paid for itself.',
         },
       ]}
       classes={{
@@ -329,7 +423,8 @@ const cbsCollectionRate = 97; // CBS average
         title: 'text-cbs-headline text-center mb-4 font-bold',
         subtitle: 'text-cbs-subtitle text-center max-w-3xl mx-auto mb-12',
         testimonials: 'grid gap-8 md:grid-cols-3 items-stretch',
-        testimonial: 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 flex flex-col relative transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
+        testimonial:
+          'bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 flex flex-col relative transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
       }}
     />
   </div>
@@ -341,7 +436,7 @@ const cbsCollectionRate = 97; // CBS average
     title="Frequently Asked Questions"
     tagline="Have Questions?"
     subtitle="Find answers to the most common questions about our medical billing services"
-    items={faqs.map(faq => ({
+    items={faqs.map((faq) => ({
       title: faq.title,
       description: faq.description,
     }))}
@@ -357,17 +452,49 @@ const cbsCollectionRate = 97; // CBS average
   <div class="cbs-section bg-primary-700 dark:bg-primary-800">
     <div class="max-w-6xl mx-auto">
       <div class="max-w-3xl mx-auto text-center p-8 rounded-lg shadow-xl bg-white dark:bg-slate-800">
-        <h2 class="text-3xl font-bold mb-4 text-primary-700 dark:text-primary-400">Discover Your Practice's Collection Potential</h2>
-        <p class="text-gray-700 dark:text-gray-300 mb-8 mx-auto max-w-3xl">Contact us for a billing assessment and discover how we can improve your collection rate</p>
+        <h2 class="text-3xl font-bold mb-4 text-primary-700 dark:text-primary-400">
+          Discover Your Practice's Collection Potential
+        </h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-8 mx-auto max-w-3xl">
+          Contact us for a billing assessment and discover how we can improve your collection rate
+        </p>
         <div class="flex flex-col sm:flex-row sm:justify-center gap-4">
-          <a href="tel:7742625550" class="inline-flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md transition duration-300 shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          <a
+            href="tel:7742625550"
+            class="inline-flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md transition duration-300 shadow-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              ></path>
             </svg>
             Call Us: (774) 262-5550
           </a>
-          <a href="#" class="inline-flex items-center justify-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-primary-700 dark:text-primary-400 font-semibold px-6 py-3 rounded-md transition duration-300 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time w-5 h-5 mr-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <a
+            href="#"
+            class="inline-flex items-center justify-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-primary-700 dark:text-primary-400 font-semibold px-6 py-3 rounded-md transition duration-300 shadow-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-calendar-time w-5 h-5 mr-2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
               <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
@@ -385,9 +512,17 @@ const cbsCollectionRate = 97; // CBS average
 
   <!-- Floating Contact Button -->
   <div class="fixed bottom-8 right-8 z-50">
-    <a href="tel:7742625550" class="flex items-center justify-center bg-primary hover:bg-primary-600 text-white p-4 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110">
+    <a
+      href="tel:7742625550"
+      class="flex items-center justify-center bg-primary hover:bg-primary-600 text-white p-4 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110"
+    >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+        ></path>
       </svg>
     </a>
   </div>
@@ -395,25 +530,25 @@ const cbsCollectionRate = 97; // CBS average
 
 <style is:global>
   :root {
-    --cbs-primary: #0057B8;
-    --cbs-primary-light: #00A0DF;
-    --cbs-accent: #FFB81C;
-    
+    --cbs-primary: #0057b8;
+    --cbs-primary-light: #00a0df;
+    --cbs-accent: #ffb81c;
+
     /* Typography colors */
     --cbs-headline: #333333;
     --cbs-subtitle: #666666;
   }
-  
+
   .dark {
     --cbs-headline: #ffffff;
     --cbs-subtitle: #e0e0e0;
   }
-  
+
   .cbs-section {
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
-  
+
   @media (min-width: 768px) {
     .cbs-section {
       padding-top: 5rem;
@@ -423,10 +558,15 @@ const cbsCollectionRate = 97; // CBS average
 
   /* Animation for CTA buttons */
   @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
   }
-  
+
   .pulse-animation {
     animation: pulse 3s infinite;
   }

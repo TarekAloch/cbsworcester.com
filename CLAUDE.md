@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a website for "Complete Billing Solutions" (CBS), a medical billing service specializing in mental health providers in Worcester. The site promotes their high collection rate (96-98%) compared to industry standards (75%).
 
 The project is built with:
+
 - **Astro 5.0**: Static site generator
 - **Tailwind CSS**: For styling
 - **TypeScript**: For type safety
@@ -14,19 +15,19 @@ The project is built with:
 
 ## Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview build locally |
-| `npm run check` | Run all checks (astro, eslint, prettier) |
-| `npm run check:astro` | Check Astro types |
-| `npm run check:eslint` | Run ESLint |
-| `npm run check:prettier` | Check code formatting |
-| `npm run fix` | Fix all issues (eslint, prettier) |
-| `npm run fix:eslint` | Fix ESLint issues |
-| `npm run fix:prettier` | Fix formatting issues |
+| Command                  | Description                              |
+| ------------------------ | ---------------------------------------- |
+| `npm install`            | Install dependencies                     |
+| `npm run dev`            | Start dev server at `localhost:4321`     |
+| `npm run build`          | Build production site to `./dist/`       |
+| `npm run preview`        | Preview build locally                    |
+| `npm run check`          | Run all checks (astro, eslint, prettier) |
+| `npm run check:astro`    | Check Astro types                        |
+| `npm run check:eslint`   | Run ESLint                               |
+| `npm run check:prettier` | Check code formatting                    |
+| `npm run fix`            | Fix all issues (eslint, prettier)        |
+| `npm run fix:eslint`     | Fix ESLint issues                        |
+| `npm run fix:prettier`   | Fix formatting issues                    |
 
 ## Project Architecture
 
@@ -37,7 +38,7 @@ The project is built with:
   - **`components/`**: Reusable Astro components
     - **`blog/`**: Blog-specific components
     - **`common/`**: Shared utility components
-    - **`ui/`**: Basic UI elements 
+    - **`ui/`**: Basic UI elements
     - **`widgets/`**: Larger page sections
   - **`content/`**: Content configuration
   - **`data/`**: Blog posts and content (MDX/MD)
@@ -57,9 +58,9 @@ The project is built with:
 ### Brand Colors
 
 ```css
---aw-color-primary: #0057B8;   /* Deep Blue */
---aw-color-secondary: #00A0DF; /* Light Blue */
---aw-color-accent: #FFB81C;    /* Gold - for CTAs */
+--aw-color-primary: #0057b8; /* Deep Blue */
+--aw-color-secondary: #00a0df; /* Light Blue */
+--aw-color-accent: #ffb81c; /* Gold - for CTAs */
 ```
 
 ### Typography
@@ -70,6 +71,7 @@ The project is built with:
 ## Deployment
 
 The site can be deployed on:
+
 - **Vercel**: Configuration in `vercel.json`
 - **Netlify**: Configuration in `netlify.toml`
 

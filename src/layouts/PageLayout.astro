@@ -17,11 +17,13 @@ const { metadata, showHeader = true } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
-  {showHeader && (
-    <slot name="header">
-      <Header {...headerData} isSticky showRssFeed showToggleTheme />
-    </slot>
-  )}
+  {
+    showHeader && (
+      <slot name="header">
+        <Header {...headerData} isSticky showRssFeed showToggleTheme />
+      </slot>
+    )
+  }
   <main>
     <slot />
   </main>
