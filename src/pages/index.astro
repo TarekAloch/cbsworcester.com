@@ -127,7 +127,7 @@ const cbsCollectionRate = 97; // CBS average
         tagline="Over 25 Years of Dedicated Service"
         callToAction={{
           text: 'Schedule a Free Consultation',
-          href: 'javascript:void(0);',
+          type: 'button',
           icon: 'tabler:calendar-time',
           class:
             'js-open-contact-modal bg-accent text-primary font-bold text-base px-6 py-3 rounded-md shadow-md hover:bg-yellow-500 hover:shadow-lg dark:bg-secondary dark:text-white dark:hover:bg-sky-500 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 hover:ring-2 hover:ring-accent hover:ring-offset-2 hover:ring-offset-bg-page focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-page',
@@ -433,8 +433,8 @@ const cbsCollectionRate = 97; // CBS average
           Contact us for a billing assessment and discover how we can improve your collection rate
         </p>
         <div class="flex flex-col sm:flex-row sm:justify-center gap-4">
-          <a
-            href="javascript:void(0);"
+          <button
+            type="button"
             id="open-contact-modal-button"
             class="js-open-contact-modal inline-flex items-center justify-center bg-primary hover:brightness-90 text-white font-semibold px-6 py-3 rounded-md transition duration-300 shadow-md"
           >
@@ -453,9 +453,9 @@ const cbsCollectionRate = 97; // CBS average
               <path d="M3 7l9 6l9 -6"></path>
             </svg>
             Contact Us
-          </a>
-          <a
-            href="javascript:void(0);"
+          </button>
+          <button
+            type="button"
             class="js-open-contact-modal inline-flex items-center justify-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-primary-700 dark:text-primary-400 font-semibold px-6 py-3 rounded-md transition duration-300 shadow-sm"
           >
             <svg
@@ -479,7 +479,7 @@ const cbsCollectionRate = 97; // CBS average
               <path d="M18 16.496v1.504l1 1"></path>
             </svg>
             Schedule Your Free Consultation
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -487,8 +487,8 @@ const cbsCollectionRate = 97; // CBS average
 
   <!-- Floating Contact Button -->
   <div class="fixed bottom-8 right-8 z-50">
-    <a
-      href="javascript:void(0);"
+    <button
+      type="button"
       class="js-open-contact-modal flex items-center justify-center bg-primary hover:bg-primary-600 text-white p-4 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110"
       aria-label="Open contact form"
     >
@@ -506,7 +506,7 @@ const cbsCollectionRate = 97; // CBS average
         <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
         <path d="M3 7l9 6l9 -6"></path>
       </svg>
-    </a>
+    </button>
   </div>
 
   {/* Contact Modal Start */}
