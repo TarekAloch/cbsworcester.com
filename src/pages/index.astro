@@ -585,6 +585,72 @@ const cbsCollectionRate = 97; // CBS average
     </div>
   </div>
   {/* Contact Modal End */}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('contact-modal');
+      const modalContent = modal ? modal.querySelector('div[class*="bg-white"]') : null; // Targets the inner modal content box
+      const openModalButton = document.getElementById('open-contact-modal-button');
+      const closeModalButton = document.getElementById('close-contact-modal-button');
+
+      if (!modal || !modalContent || !openModalButton || !closeModalButton) {
+        console.warn('Modal elements not found. Contact form interactivity will be affected.');
+        return;
+      }
+
+      // Function to open the modal
+      function openModal() {
+        if (modal.classList.contains('hidden')) {
+          document.body.classList.add('overflow-hidden'); // Prevent background scrolling
+          modal.classList.remove('hidden');
+          // Force a reflow to ensure 'hidden' is removed before transitions start
+          void modal.offsetWidth; 
+          modal.classList.remove('opacity-0'); // Fade in backdrop
+          modalContent.classList.remove('opacity-0', 'scale-95');
+          modalContent.classList.add('opacity-100', 'scale-100'); // Animate content
+        }
+      }
+
+      // Function to close the modal
+      function closeModal() {
+        if (!modal.classList.contains('hidden')) {
+          document.body.classList.remove('overflow-hidden');
+          modal.classList.add('opacity-0'); // Fade out backdrop
+          modalContent.classList.add('opacity-0', 'scale-95');
+          modalContent.classList.remove('opacity-100', 'scale-100'); // Animate content
+
+          // Wait for the modal (backdrop) transition to finish before adding 'hidden'
+          // The modal itself has a transition duration of 300ms.
+          const transitionDuration = 300; 
+          setTimeout(() => {
+            modal.classList.add('hidden');
+          }, transitionDuration);
+        }
+      }
+
+      // Event Listeners
+      openModalButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default anchor behavior
+        openModal();
+      });
+
+      closeModalButton.addEventListener('click', closeModal);
+
+      // Close modal on overlay click
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Close modal on Escape key press
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+    });
+  </script>
 </Layout>
 
 <style is:global>
@@ -596,6 +662,13 @@ const cbsCollectionRate = 97; // CBS average
     /* Typography colors */
     --cbs-headline: #333333;
     --cbs-subtitle: #666666;
+  }
+
+  /* Ensure modal container uses flex to center its content when visible */
+  #contact-modal:not(.hidden) {
+    display: flex !important; /* Reinforce flex display */
+    align-items: center !important; /* Reinforce vertical centering */
+    justify-content: center !important; /* Reinforce horizontal centering */
   }
 
   .dark {
