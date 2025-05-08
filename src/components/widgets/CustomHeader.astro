@@ -1,4 +1,6 @@
 ---
+// src/components/widgets/CustomHeader.astro
+// This component now holds the consistent header for the entire site.
 ---
 
 <div class="bg-white dark:bg-slate-800 py-2 text-sm text-center sticky top-0 z-50 shadow-md">
@@ -10,9 +12,11 @@
       </a>
     </div>
     <ul class="hidden md:flex justify-center space-x-6 text-primary-600 dark:text-primary-200">
-      <li><a href="/" class="hover:underline">Home</a></li>
-      <li><a href="/privacy" class="hover:underline">Privacy Policy</a></li>
-      <li><a href="/terms" class="hover:underline">Terms</a></li>
+      <li><a href="/#features" class="hover:underline">Our Services</a></li>
+      <li><a href="/#process" class="hover:underline">Our Process</a></li>
+      <li><a href="/#whyus" class="hover:underline">Why Choose Us</a></li>
+      <li><a href="/#testimonials" class="hover:underline">Success Stories</a></li>
+      <li><button type="button" class="js-open-contact-modal hover:underline">Contact Us</button></li>
     </ul>
     <div class="flex items-center">
       <button
@@ -59,9 +63,11 @@
   <!-- Mobile Navigation Menu -->
   <div class="md:hidden pt-2">
     <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-primary-600 dark:text-primary-200 text-xs">
-      <li><a href="/" class="hover:underline">Home</a></li>
-      <li><a href="/privacy" class="hover:underline">Privacy Policy</a></li>
-      <li><a href="/terms" class="hover:underline">Terms</a></li>
+      <li><a href="/#features" class="hover:underline">Our Services</a></li>
+      <li><a href="/#process" class="hover:underline">Our Process</a></li>
+      <li><a href="/#whyus" class="hover:underline">Why Choose Us</a></li>
+      <li><a href="/#testimonials" class="hover:underline">Success Stories</a></li>
+      <li><button type="button" class="js-open-contact-modal hover:underline">Contact Us</button></li>
     </ul>
   </div>
 </div>
