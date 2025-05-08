@@ -184,13 +184,69 @@ Build output is static HTML (`output: 'static'` in astro.config.ts).
 
 ## Current Work In Progress
 
-We are currently addressing two issues related to the site-wide component integration:
+### 2025-05-15: Cross-Page Component Integration Improvements
 
-1. **Duplicate theme toggle issue:** There appears to be a duplicate sun/moon toggle appearing on the terms and privacy policy pages, likely due to multiple instances of the theme toggle functionality being loaded.
+We've been working on two significant issues related to site-wide component integration and Astro's View Transitions:
 
-2. **Contact modal functionality:** The "Contact Us" button in the CustomHeader component doesn't properly trigger the contact modal when clicked from pages other than the homepage. This is likely because:
-   - The modal HTML might only exist on the homepage
-   - Event listeners for the modal buttons may not be properly attached on all pages
-   - JavaScript initialization might need to be moved to a global script
+1. **Duplicate theme toggle issue:** 
+   - **Issue**: Duplicate sun/moon toggle appearing on the terms and privacy policy pages
+   - **Root cause**: Multiple instances of the theme toggle functionality loading simultaneously - both the custom implementation in `CustomHeader.astro` and potentially the default `ToggleTheme.astro` component elsewhere
+   - **Technical analysis**: 
+     - Both toggles use the same data attribute `data-aw-toggle-color-scheme` 
+     - The `BasicScripts.astro` component initializes all elements with this attribute
+     - When both are present on the same page, both get initialized and are visible
+   - **Attempted fix**: Added `transition:replace` directive to `CustomHeader` component in MarkdownLayout.astro to ensure proper replacement during View Transitions
+   - **Status**: Issue still persists and requires further debugging
 
-The next phase of work will focus on ensuring consistent theme toggling and making the contact modal work properly across all pages of the site.
+2. **Contact modal functionality:** A complex issue with multiple facets:
+   - **Original issue**: Modal buttons with class `js-open-contact-modal` not working consistently when navigating between pages
+   - **Behavioral analysis**: Detailed logs show that the problem occurs after specific navigation sequences (e.g., Terms → Home via logo link → click modal button)
+   - **Root cause investigation**:
+     - Using browser devtools confirms the modal HTML exists on all pages after our changes
+     - Event listeners appear to be attached correctly according to console logs
+     - Specific navigation patterns seem to create a disconnect between the delegated click listener and the modal element references
+     - Likely related to how Astro's View Transitions preserves/replaces DOM elements
+   - **Implemented changes**:
+     - Changed "Contact Us" links in header to standard anchor links (`<a href="/#contact">`) instead of modal triggers
+     - Added `id="contact"` attribute to the CTA section on the homepage for anchor link targets
+     - Added `transition:replace` directive to header elements for proper View Transitions
+     - Added form submission handler to handle AJAX submissions with proper feedback
+     - Completely rewrote the ContactModal.astro JavaScript with a robust event delegation approach:
+       - Created separate delegated listeners for open buttons, close button, overlay clicks, and ESC key
+       - Used global window flags to ensure listeners are attached exactly once
+       - Implemented detailed logging for debugging
+       - Simplified `astro:page-load` handler to only update element references
+       - Added TypeScript declarations for window properties
+       - Added `findAndSetModalElements()` function that is called on every click to ensure fresh element references
+   - **Status**: Some buttons still not working properly after certain navigation sequences
+   
+### Next Steps
+
+1. **For theme toggle issue**:
+   - Replace custom theme toggle implementation in CustomHeader.astro with standard ToggleTheme component
+   - OR modify theme initialization to conditionally control which toggle is active
+   - OR add a unique attribute to one implementation and modify BasicScripts.astro to target only one type
+
+2. **For contact modal issue**:
+   - Further debugging of element references and event binding after View Transitions
+   - Consider using a more global approach like a custom element or Astro island with `client:only` directive
+   - Ensure form submission handler is properly reinitialized after page transitions
+   - Possible solution: Move modal to the Layout.astro base component to ensure it's always present
+   - Alternative: Implement as a web component for better encapsulation across page transitions
+
+Both issues relate to how components behave across Astro's View Transitions, particularly when identical or similar functionality exists in multiple components or when JavaScript needs to maintain state and event bindings across page navigation. The challenges highlight the complexity of managing stateful interactions in a hybrid static/dynamic site with client-side transitions.
+
+**Key Files for Review:**
+- `src/components/widgets/CustomHeader.astro`: Contains site-wide navigation with theme toggle implementation
+- `src/components/common/ToggleTheme.astro`: Standard theme toggle component
+- `src/components/common/BasicScripts.astro`: Contains the theme toggle initialization logic (line ~67)
+- `src/components/widgets/ContactModal.astro`: Contains modal HTML, CSS and JavaScript with event delegation
+- `src/layouts/MarkdownLayout.astro`: Layout for content pages (Terms & Privacy) that use CustomHeader
+- `src/layouts/Layout.astro`: Base layout that includes BasicScripts.astro
+- `src/pages/index.astro`: Homepage with contact section and custom header implementation
+
+**File Changes Made:**
+- Modified `src/components/widgets/CustomHeader.astro`: Changed Contact Us buttons to anchor links
+- Modified `src/pages/index.astro`: Added id="contact" to CTA section
+- Modified `src/layouts/MarkdownLayout.astro`: Added transition:replace to CustomHeader
+- Modified `src/components/widgets/ContactModal.astro`: Complete rewrite of JavaScript with event delegation

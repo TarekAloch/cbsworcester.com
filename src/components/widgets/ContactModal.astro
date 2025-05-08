@@ -112,38 +112,31 @@
 
 {/* Modal JavaScript - Now part of the component */}
 <script>
-  // Define variables and functions in the script's top-level scope
+  // Module-scoped variables to hold references
   let modalElement: HTMLElement | null = null;
   let modalContentElement: Element | null = null;
+  let isEscListenerAttached = false;
+  // Remove window flags, we'll manage listeners within page load now
 
-  function findModalElements() {
-    modalElement = document.getElementById('contact-modal') as HTMLElement | null;
-    modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
-    // Return true if elements were found, false otherwise
-    return !!(modalElement && modalContentElement);
-  }
-
+  // --- Core Modal Functions ---
   function openModal() {
-    // Attempt to find elements *just in case* they weren't found before
-    if (!modalElement && !findModalElements()) {
-      console.warn('Cannot open modal: elements not found.');
+    if (!modalElement || !modalContentElement) {
+      console.warn('Cannot open modal: Elements not found or not initialized.');
       return;
     }
-    // Ensure TS knows elements are potentially non-null now (though findModalElements guarantees it if true)
-    if (!modalElement || !modalContentElement) return;
-
     if (modalElement.classList.contains('hidden')) {
       document.body.classList.add('overflow-hidden');
       modalElement.classList.remove('hidden');
-      void modalElement.offsetWidth;
+      void modalElement.offsetWidth; // Force reflow
       modalElement.classList.remove('opacity-0');
       modalContentElement.classList.remove('opacity-0', 'scale-95');
       modalContentElement.classList.add('opacity-100', 'scale-100');
+      console.log('Modal opened.');
     }
   }
 
   function closeModal() {
-    if (!modalElement || !modalContentElement) return;
+    if (!modalElement || !modalContentElement) return; // Guard
 
     if (!modalElement.classList.contains('hidden')) {
       document.body.classList.remove('overflow-hidden');
@@ -155,9 +148,11 @@
       setTimeout(() => {
         if (modalElement) modalElement.classList.add('hidden');
       }, transitionDuration);
+      console.log('Modal closed.');
     }
   }
 
+  // --- Event Handlers ---
   function handleEscKey(event: KeyboardEvent) {
     if (event.key === 'Escape' && modalElement && !modalElement.classList.contains('hidden')) {
       closeModal();
@@ -165,141 +160,92 @@
   }
 
   function closeModalOnOverlay(event: MouseEvent) {
-    const target = event.target; // Define target
+    const target = event.target;
     if (modalElement && target instanceof Node && target === modalElement) {
-      // Added type check for safety
       closeModal();
     }
   }
 
-  // --- Form submission handler ---
-  async function handleSubmit(event: SubmitEvent) {
-    event.preventDefault(); // Stop default form submission
+  // --- Function to Find Elements ---
+  function findAndSetModalElements(): boolean {
+    modalElement = document.getElementById('contact-modal') as HTMLElement | null;
+    modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
+    const found = !!(modalElement && modalContentElement);
+    // console.log(found ? "Found modal elements." : "Did not find modal elements."); // Optional log
+    return found;
+  }
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const statusDiv = document.getElementById('form-status');
-    const submitButton = form.querySelector('button[type=submit]') as HTMLButtonElement | null;
-
-    if (!statusDiv || !submitButton) return;
-
-    // Show loading state
-    const originalButtonText = submitButton.innerHTML;
-    submitButton.disabled = true;
-    submitButton.innerHTML = `
-      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Sending...`;
-    statusDiv.textContent = ''; // Clear previous status
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-          Accept: 'application/json', // Important for Formspree AJAX
-        },
-      });
-
-      if (response.ok) {
-        // Success
-        statusDiv.textContent = 'Message sent successfully!';
-        statusDiv.className = 'text-sm mr-auto text-green-600 dark:text-green-400'; // Success styling
-        form.reset(); // Clear form fields
-        submitButton.disabled = false; // Re-enable button immediately after reset
-        submitButton.innerHTML = originalButtonText; // Restore button text
-        // Optionally close modal after a short delay
-        // setTimeout(closeModal, 2000);
-      } else {
-        // Handle server errors (e.g., Formspree validation errors)
-        const data = await response.json();
-        if (Object.hasOwn(data, 'errors')) {
-          statusDiv.textContent = data['errors'].map((error: { message: string }) => error.message).join(', ');
+  // --- Delegated Open Click Handler Function ---
+  // Define the handler function separately
+  function handleOpenModalClick(event: MouseEvent) {
+    const target = event.target;
+    if (target && target instanceof Element) {
+      const openButton = target.closest('.js-open-contact-modal');
+      if (openButton) {
+        console.log(">>> Delegated click: js-open-contact-modal button found");
+        event.preventDefault();
+        // Ensure elements are found *before* opening
+        if (findAndSetModalElements()) { // Find elements NOW
+          openModal();
         } else {
-          statusDiv.textContent = 'Oops! There was a problem submitting your form.';
+          console.warn(">>> Delegated click: Modal elements not found on page.");
         }
-        statusDiv.className = 'text-sm mr-auto text-red-600 dark:text-red-400'; // Error styling
-        submitButton.disabled = false; // Re-enable button
-        submitButton.innerHTML = originalButtonText; // Restore button text
       }
-    } catch (error) {
-      console.error('Form submission network error:', error); // Log the error
-      // Handle network errors
-      statusDiv.textContent = 'Oops! There was a network error.';
-      statusDiv.className = 'text-sm mr-auto text-red-600 dark:text-red-400'; // Error styling
-      submitButton.disabled = false; // Re-enable button
-      submitButton.innerHTML = originalButtonText; // Restore button text
     }
   }
 
-  function setupModalCloseListeners() {
-    // This function *only* attaches listeners related to closing
-    // It assumes modalElement is already found by the caller
-    if (!modalElement) return; // Guard
-
-    const closeModalButton = document.getElementById('close-contact-modal-button');
-
-    // Setup form submission
-    const form = document.getElementById('contact-cbs-form') as HTMLFormElement | null; // Get form
-    if (form) {
-      form.removeEventListener('submit', handleSubmit); // Prevent duplicates
-      form.addEventListener('submit', handleSubmit);
+  // --- Function to Setup ALL Listeners ---
+  function setupAllModalListeners() {
+    // Find elements first
+    if (!findAndSetModalElements()) {
+      console.log("Modal elements not found on this page load, skipping listener setup.");
+      // Clean up global listener potentially left from previous page
+      document.removeEventListener('keydown', handleEscKey);
+      isEscListenerAttached = false;
+      // We don't remove the delegated open listener here, as it might be needed if modal appears dynamically
+      return; // Exit if no modal
     }
+    console.log("Modal elements found, setting up listeners.");
 
+    // --- Attach listeners specific to the modal's internal elements ---
+    const closeModalButton = document.getElementById('close-contact-modal-button');
     if (closeModalButton) {
-      closeModalButton.removeEventListener('click', closeModal);
+      closeModalButton.removeEventListener('click', closeModal); // Prevent duplicates
       closeModalButton.addEventListener('click', closeModal);
     }
+    if (modalElement) { // Guard modalElement before adding listener to it
+      modalElement.removeEventListener('click', closeModalOnOverlay); // Prevent duplicates
+      modalElement.addEventListener('click', closeModalOnOverlay);
+    }
 
-    modalElement.removeEventListener('click', closeModalOnOverlay);
-    modalElement.addEventListener('click', closeModalOnOverlay);
+    // --- Manage global listeners ---
+    // ESC Key
+    if (!isEscListenerAttached) {
+      document.addEventListener('keydown', handleEscKey);
+      isEscListenerAttached = true;
+      console.log("ESC key listener attached.");
+    } else {
+      console.log("ESC key listener already attached.");
+    }
 
-    document.removeEventListener('keydown', handleEscKey); // Manage global listener
-    document.addEventListener('keydown', handleEscKey);
-    console.log('Close listeners attached.');
+    // Delegated Open Listener - Attach to document now
+    // Remove first to prevent duplicates if this function runs multiple times on same page view
+    document.removeEventListener('click', handleOpenModalClick);
+    document.addEventListener('click', handleOpenModalClick);
+    console.log("Delegated open modal listener attached to document.");
+
+    console.log("All modal listeners set up.");
   }
 
-  // --- Event Delegation for OPENING ---
-  // Attach ONCE to the body. Use a flag to be sure.
-  let isDelegatedOpenListenerAttached = false;
-  if (!isDelegatedOpenListenerAttached && typeof document !== 'undefined') {
-    // Add check for document
-    document.body.addEventListener('click', function (event: MouseEvent) {
-      const target = event.target;
-      if (target && target instanceof Element) {
-        const openButton = target.closest('.js-open-contact-modal');
-        if (openButton) {
-          event.preventDefault();
-          // Ensure elements are found *before* trying to open
-          if (findModalElements()) {
-            openModal();
-          } else {
-            console.warn('Clicked open button, but modal elements not found on page.');
-          }
-        }
-      }
-    });
-    isDelegatedOpenListenerAttached = true;
-    console.log('Delegated open modal listener attached.');
-  }
-
-  // --- Initialization on page load (Astro specific) ---
+  // --- Astro Page Load Handler ---
+  // This runs on initial load AND after view transitions
   if (typeof document !== 'undefined') {
-    // Add check for document
     document.addEventListener('astro:page-load', () => {
-      console.log('astro:page-load triggered on:', window.location.pathname);
-      // Find modal elements on this page load
-      if (findModalElements()) {
-        // If found, set up the listeners specific to closing it
-        console.log('Modal elements found, setting up close listeners.');
-        setupModalCloseListeners();
-      } else {
-        console.log('Modal elements NOT found on this page.');
-        // Optional: potentially remove global listeners if modal is no longer present
-        document.removeEventListener('keydown', handleEscKey);
-      }
+      console.log(`>>> astro:page-load triggered on: ${window.location.pathname}. Running listener setup...`);
+      // On every page load, run the full setup
+      setupAllModalListeners();
     });
   }
+
+  // No initial call needed - astro:page-load covers the first load.
 </script>
