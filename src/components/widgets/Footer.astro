@@ -9,19 +9,61 @@ interface Link {
   icon?: string;
 }
 
+/*
+ * This interface was previously used to define the footer column links structure:
+ * - links prop was an array of this type
+ * - Each Links object contained a title (e.g. "Product", "Platform", "Support", "Company")
+ * - And an array of Link objects (text, href, ariaLabel)
+ * - The component mapped through these to create the column structure of the footer
+ *
+ * HTML structure that was removed:
+ * ```
+ * {
+ *   links.map(({ title, links }) => (
+ *     <div class="col-span-6 md:col-span-3 lg:col-span-2">
+ *       <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
+ *       {links && Array.isArray(links) && links.length > 0 && (
+ *         <ul class="text-sm">
+ *           {links.map(({ text, href, ariaLabel }) => (
+ *             <li class="mb-2">
+ *               <a
+ *                 class="text-muted hover:text-gray-700 hover:underline dark:text-gray-400 transition duration-150 ease-in-out"
+ *                 href={href}
+ *                 aria-label={ariaLabel}
+ *               >
+ *                 <Fragment set:html={text} />
+ *               </a>
+ *             </li>
+ *           ))}
+ *         </ul>
+ *       )}
+ *     </div>
+ *   ))
+ * }
+ * ```
+ *
+ * Preserved in case we need to restore footer links columns in the future.
+ */
+
+// Commented out to prevent ESLint/TypeScript errors while preserving the structure
+// for documentation purposes
+/*
 interface Links {
   title?: string;
   links: Array<Link>;
 }
+*/
+
+// Type definition remains available in this comment for future reference:
+// interface Links { title?: string; links: Array<Link>; }
 
 export interface Props {
-  links: Array<Links>;
   secondaryLinks: Array<Link>;
   footNote?: string;
   theme?: string;
 }
 
-const { secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const { secondaryLinks = [], footNote = '', theme = 'light' } = Astro.props;
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
@@ -49,28 +91,6 @@ const { secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astr
           }
         </div>
       </div>
-      {
-        links.map(({ title, links }) => (
-          <div class="col-span-6 md:col-span-3 lg:col-span-2">
-            <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
-            {links && Array.isArray(links) && links.length > 0 && (
-              <ul class="text-sm">
-                {links.map(({ text, href, ariaLabel }) => (
-                  <li class="mb-2">
-                    <a
-                      class="text-muted hover:text-gray-700 hover:underline dark:text-gray-400 transition duration-150 ease-in-out"
-                      href={href}
-                      aria-label={ariaLabel}
-                    >
-                      <Fragment set:html={text} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))
-      }
     </div>
     <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
       {/* Item 1: Credit Line (Far Left) */}
