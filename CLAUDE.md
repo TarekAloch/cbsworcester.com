@@ -15,12 +15,48 @@ The project is built with:
 
 ## Recent Changes
 
-### Header and Navigation
+### 2025-05-08: Accessibility & Style Improvements
+
+1. **Accessibility Improvements:**
+
+   - Converted interactive links to proper `<button>` elements in the following locations:
+     - Hero section CTA button (changed `href` to `type: 'button'`)
+     - "Contact Us" button in CTA section
+     - "Schedule Consultation" button in CTA section
+     - Floating Action Button
+   - Added appropriate `aria-label="Visit Tarek Aloch's homepage"` to the footer icon link
+
+2. **Styling Consistency:**
+
+   - Updated button styles for visual consistency
+   - Applied gold accent color to CTA buttons on hover
+   - Improved focus states for keyboard navigation
+   - Standardized transition animations across interactive elements
+
+3. **Modal Improvements:**
+
+   - Refactored modal JavaScript to work with Astro's View Transitions
+   - Implemented event delegation for more reliable event handling
+   - Added proper TypeScript type annotations (HTMLElement | null, KeyboardEvent, MouseEvent)
+   - Improved error handling for modal initialization
+   - Added support for astro:page-load event to work with Astro's View Transitions
+
+4. **Content Updates:**
+
+   - Updated "Years in Business" statistic from "20+" to "25+"
+
+5. **Footer Optimization:**
+   - Removed unused column links from footer for cleaner appearance
+   - Preserved detailed documentation in comments for future reference
+
+### Earlier Changes
+
+#### Header and Navigation
 
 - Changed the sticky header background from `bg-primary-100` to `bg-white` in light mode to improve text readability
 - Improved the theme toggle button with smoother animations (added CSS classes and transitions)
 
-### Contact Modal
+#### Contact Modal
 
 - Added a contact modal system instead of navigating to sections
 - All "Contact Us" and "Schedule a Free Consultation" buttons now open the modal instead of linking to page sections
@@ -29,7 +65,7 @@ The project is built with:
 - Added CSS to ensure modal is properly centered with flex display
 - Added smooth transitions with proper durations (500ms) for opening/closing animations
 
-### Attribution and Footer
+#### Attribution and Footer
 
 - Moved the "Made by Tarek Aloch" credit from a separate Announcement component to the Footer component
 - Simplified display by separating the text and icon
@@ -37,7 +73,7 @@ The project is built with:
 - Removed social links section from the Footer component
 - Fixed TypeScript errors by removing inline comments from HTML attributes
 
-### TypeScript Fixes
+#### TypeScript Fixes
 
 - Fixed TypeScript warning in `src/utils/images.ts` by properly typing the `_image` variable
 
