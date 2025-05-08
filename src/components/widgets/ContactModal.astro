@@ -182,13 +182,14 @@
     if (target && target instanceof Element) {
       const openButton = target.closest('.js-open-contact-modal');
       if (openButton) {
-        console.log(">>> Delegated click: js-open-contact-modal button found");
+        console.log('>>> Delegated click: js-open-contact-modal button found');
         event.preventDefault();
         // Ensure elements are found *before* opening
-        if (findAndSetModalElements()) { // Find elements NOW
+        if (findAndSetModalElements()) {
+          // Find elements NOW
           openModal();
         } else {
-          console.warn(">>> Delegated click: Modal elements not found on page.");
+          console.warn('>>> Delegated click: Modal elements not found on page.');
         }
       }
     }
@@ -198,14 +199,14 @@
   function setupAllModalListeners() {
     // Find elements first
     if (!findAndSetModalElements()) {
-      console.log("Modal elements not found on this page load, skipping listener setup.");
+      console.log('Modal elements not found on this page load, skipping listener setup.');
       // Clean up global listener potentially left from previous page
       document.removeEventListener('keydown', handleEscKey);
       isEscListenerAttached = false;
       // We don't remove the delegated open listener here, as it might be needed if modal appears dynamically
       return; // Exit if no modal
     }
-    console.log("Modal elements found, setting up listeners.");
+    console.log('Modal elements found, setting up listeners.');
 
     // --- Attach listeners specific to the modal's internal elements ---
     const closeModalButton = document.getElementById('close-contact-modal-button');
@@ -213,7 +214,8 @@
       closeModalButton.removeEventListener('click', closeModal); // Prevent duplicates
       closeModalButton.addEventListener('click', closeModal);
     }
-    if (modalElement) { // Guard modalElement before adding listener to it
+    if (modalElement) {
+      // Guard modalElement before adding listener to it
       modalElement.removeEventListener('click', closeModalOnOverlay); // Prevent duplicates
       modalElement.addEventListener('click', closeModalOnOverlay);
     }
@@ -223,18 +225,18 @@
     if (!isEscListenerAttached) {
       document.addEventListener('keydown', handleEscKey);
       isEscListenerAttached = true;
-      console.log("ESC key listener attached.");
+      console.log('ESC key listener attached.');
     } else {
-      console.log("ESC key listener already attached.");
+      console.log('ESC key listener already attached.');
     }
 
     // Delegated Open Listener - Attach to document now
     // Remove first to prevent duplicates if this function runs multiple times on same page view
     document.removeEventListener('click', handleOpenModalClick);
     document.addEventListener('click', handleOpenModalClick);
-    console.log("Delegated open modal listener attached to document.");
+    console.log('Delegated open modal listener attached to document.');
 
-    console.log("All modal listeners set up.");
+    console.log('All modal listeners set up.');
   }
 
   // --- Astro Page Load Handler ---
@@ -248,14 +250,14 @@
   }
 
   // No initial call needed - astro:page-load covers the first load.
-  
-  /* 
-  * NOTE: 2025-05-17: Modal View Transitions Fix
-  * This implementation fixes the modal functionality during Astro View Transitions by:
-  * 1. Moving all listener setup into the astro:page-load event
-  * 2. Using setupAllModalListeners() to manage all listeners with proper cleanup
-  * 3. Using direct element references that refresh on each page load
-  * 4. Properly handling event delegation for all modal interactions
-  * If issues recur with the modal after view transitions, check these event bindings first.
-  */
+
+  /*
+   * NOTE: 2025-05-17: Modal View Transitions Fix
+   * This implementation fixes the modal functionality during Astro View Transitions by:
+   * 1. Moving all listener setup into the astro:page-load event
+   * 2. Using setupAllModalListeners() to manage all listeners with proper cleanup
+   * 3. Using direct element references that refresh on each page load
+   * 4. Properly handling event delegation for all modal interactions
+   * If issues recur with the modal after view transitions, check these event bindings first.
+   */
 </script>

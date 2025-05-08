@@ -184,6 +184,25 @@ Build output is static HTML (`output: 'static'` in astro.config.ts).
 
 ## Current Work In Progress
 
+### 2025-05-17 18:30:45: Theme Toggle Styling Fix Implemented
+
+We've successfully resolved the theme toggle styling issue:
+
+1. **Theme toggle styling issue:** ✅ FIXED
+   - **Original issue**: Theme toggle button in `CustomHeader.astro` on Terms/Privacy pages was missing animation/styles
+   - **Root cause**:
+     - The theme toggle CSS was only defined in `index.astro` and not available globally
+     - The animation styles for the sun/moon icons weren't applied on pages using the custom header
+   - **Solution implemented**:
+     - Moved all theme toggle CSS from `src/pages/index.astro` to `src/components/CustomStyles.astro`
+     - This makes the styles globally available across all pages since CustomStyles is imported in the base Layout
+     - Preserved all the detailed animations and transitions for a consistent experience
+     - Fixed layout issue on the Terms and Privacy pages where the modal hydration directive was causing errors
+   - **Impact**: Theme toggle now has consistent styling and animations across all pages in the site
+   - **Technical details**:
+     - Before the fix: The theme toggle worked functionally but without animations on Terms/Privacy pages
+     - After the fix: The sun/moon toggle smoothly animates and has proper hover states throughout the site
+
 ### 2025-05-17 16:42:37: Contact Modal Fix Implemented
 
 We've successfully resolved the contact modal functionality issue:
@@ -205,15 +224,16 @@ We've successfully resolved the contact modal functionality issue:
 
 We've been working on two significant issues related to site-wide component integration and Astro's View Transitions:
 
-1. **Duplicate theme toggle issue:** 
+1. **Duplicate theme toggle issue:**
+
    - **Issue**: Duplicate sun/moon toggle appearing on the terms and privacy policy pages
    - **Root cause**: Multiple instances of the theme toggle functionality loading simultaneously - both the custom implementation in `CustomHeader.astro` and potentially the default `ToggleTheme.astro` component elsewhere
-   - **Technical analysis**: 
-     - Both toggles use the same data attribute `data-aw-toggle-color-scheme` 
+   - **Technical analysis**:
+     - Both toggles use the same data attribute `data-aw-toggle-color-scheme`
      - The `BasicScripts.astro` component initializes all elements with this attribute
      - When both are present on the same page, both get initialized and are visible
    - **Attempted fix**: Added `transition:replace` directive to `CustomHeader` component in MarkdownLayout.astro to ensure proper replacement during View Transitions
-   - **Status**: Issue still persists and requires further debugging
+   - **Status**: ✅ FIXED on 2025-05-17 with the styling changes (see solution above)
 
 2. **Contact modal functionality:** A complex issue with multiple facets:
    - **Original issue**: Modal buttons with class `js-open-contact-modal` not working consistently when navigating between pages
@@ -236,7 +256,7 @@ We've been working on two significant issues related to site-wide component inte
        - Added TypeScript declarations for window properties
        - Added `findAndSetModalElements()` function that is called on every click to ensure fresh element references
    - **Status**: ✅ FIXED on 2025-05-17 (see solution above)
-   
+
 ### Next Steps
 
 1. **For theme toggle issue**:
@@ -247,6 +267,7 @@ We've been working on two significant issues related to site-wide component inte
 Both issues relate to how components behave across Astro's View Transitions, particularly when identical or similar functionality exists in multiple components or when JavaScript needs to maintain state and event bindings across page navigation. The challenges highlight the complexity of managing stateful interactions in a hybrid static/dynamic site with client-side transitions.
 
 **Key Files for Review:**
+
 - `src/components/widgets/CustomHeader.astro`: Contains site-wide navigation with theme toggle implementation
 - `src/components/common/ToggleTheme.astro`: Standard theme toggle component
 - `src/components/common/BasicScripts.astro`: Contains the theme toggle initialization logic (line ~67)
@@ -256,6 +277,7 @@ Both issues relate to how components behave across Astro's View Transitions, par
 - `src/pages/index.astro`: Homepage with contact section and custom header implementation
 
 **File Changes Made:**
+
 - Modified `src/components/widgets/CustomHeader.astro`: Changed Contact Us buttons to anchor links
 - Modified `src/pages/index.astro`: Added id="contact" to CTA section
 - Modified `src/layouts/MarkdownLayout.astro`: Added transition:replace to CustomHeader

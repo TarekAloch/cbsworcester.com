@@ -7,6 +7,7 @@ import Stats from '~/components/widgets/Stats.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import Content from '~/components/widgets/Content.astro';
 import ContactModal from '~/components/widgets/ContactModal.astro';
+import CustomHeader from '~/components/widgets/CustomHeader.astro';
 
 const metadata = {
   title: 'Complete Billing Solutions | 96-98% Collection Rate for Mental Health Providers',
@@ -40,73 +41,8 @@ const cbsCollectionRate = 97; // CBS average
 ---
 
 <Layout metadata={metadata} showHeader={false}>
-  <!-- Quick Navigation Links -->
-  <div class="bg-white dark:bg-slate-800 py-2 text-sm text-center sticky top-0 z-50 shadow-md" transition:replace>
-    <div class="container mx-auto flex justify-between items-center px-4">
-      <div class="flex items-center">
-        <span class="text-2xl font-bold text-gray-900 dark:text-white">🚀</span>
-        <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">Complete Billing Solutions</span>
-      </div>
-      <ul class="hidden md:flex justify-center space-x-6 text-primary-600 dark:text-primary-200">
-        <li><a href="#features" class="hover:underline">Our Services</a></li>
-        <li><a href="#process" class="hover:underline">Our Process</a></li>
-        <li><a href="#whyus" class="hover:underline">Why Choose Us</a></li>
-        <li><a href="#testimonials" class="hover:underline">Success Stories</a></li>
-        <li><a href="#contact" class="hover:underline">Contact Us</a></li>
-      </ul>
-      <div class="flex items-center">
-        <button
-          type="button"
-          class="theme-toggle text-gray-500 dark:text-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 text-sm"
-          aria-label="Toggle between Dark and Light mode"
-          data-aw-toggle-color-scheme
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-sun sun-icon w-5 h-5"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-            <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
-          </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-moon moon-icon w-5 h-5"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Navigation Menu -->
-    <div class="md:hidden pt-2">
-      <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-primary-600 dark:text-primary-200 text-xs">
-        <li><a href="#features" class="hover:underline">Our Services</a></li>
-        <li><a href="#process" class="hover:underline">Our Process</a></li>
-        <li><a href="#whyus" class="hover:underline">Why Choose Us</a></li>
-        <li><a href="#testimonials" class="hover:underline">Success Stories</a></li>
-        <li><a href="#contact" class="hover:underline">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
+  <!-- Use the reusable CustomHeader component with transition:replace -->
+  <CustomHeader transition:replace />
 
   <!-- Hero Section Implementation -->
   <div class="relative overflow-hidden">
@@ -556,63 +492,5 @@ const cbsCollectionRate = 97; // CBS average
     animation: pulse 3s infinite;
   }
 
-  /* Global body transition for theme change */
-  body {
-    transition:
-      background-color 0.5s ease,
-      color 0.5s ease;
-  }
-
-  /* Theme toggle button styling and animation */
-  .theme-toggle {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    width: 40px; /* Corresponds to w-10 or (icon w-5 + padding p-2.5 on each side) */
-    height: 40px; /* Corresponds to h-10 or (icon h-5 + padding p-2.5 on each side) */
-    border-radius: 50%; /* Circular button */
-    display: flex; /* This is now handled by CSS instead of Tailwind inline-flex */
-    align-items: center; /* This is now handled by CSS instead of Tailwind items-center */
-    justify-content: center;
-    position: relative; /* For positioning icons absolutely inside */
-    transition: background-color 0.3s ease; /* Transition for hover background */
-  }
-
-  .theme-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover for light mode */
-  }
-
-  .dark .theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover for dark mode */
-  }
-
-  .theme-toggle svg {
-    /* SVGs retain their w-5 h-5 Tailwind classes for size.
-       The CSS below handles transition and absolute positioning. */
-    transition:
-      transform 0.5s ease,
-      opacity 0.3s ease;
-    position: absolute; /* Allows icons to overlap for smooth transition */
-  }
-
-  .theme-toggle .sun-icon {
-    opacity: 0; /* Start hidden in light mode (moon is visible) */
-    transform: scale(0.5) rotate(45deg);
-  }
-
-  .theme-toggle .moon-icon {
-    opacity: 1; /* Start visible in light mode */
-    transform: scale(1) rotate(0deg);
-  }
-
-  /* Styles when dark mode is active */
-  .dark .theme-toggle .sun-icon {
-    opacity: 1; /* Becomes visible in dark mode */
-    transform: scale(1) rotate(0deg);
-  }
-
-  .dark .theme-toggle .moon-icon {
-    opacity: 0; /* Becomes hidden in dark mode */
-    transform: scale(0.5) rotate(-45deg);
-  }
+  /* Animation for CTA buttons */
 </style>

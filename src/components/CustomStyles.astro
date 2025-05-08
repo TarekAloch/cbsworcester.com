@@ -91,4 +91,64 @@ import '@fontsource/open-sans/600.css'; // Semi-Bold
   .cbs-section {
     @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-20; /* Consistent section padding */
   }
+
+  /* Global body transition for theme change */
+  body {
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
+  }
+
+  /* Theme toggle button styling and animation */
+  .theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 40px; /* Corresponds to w-10 or (icon w-5 + padding p-2.5 on each side) */
+    height: 40px; /* Corresponds to h-10 or (icon h-5 + padding p-2.5 on each side) */
+    border-radius: 50%; /* Circular button */
+    display: flex; /* This is now handled by CSS instead of Tailwind inline-flex */
+    align-items: center; /* This is now handled by CSS instead of Tailwind items-center */
+    justify-content: center;
+    position: relative; /* For positioning icons absolutely inside */
+    transition: background-color 0.3s ease; /* Transition for hover background */
+  }
+
+  .theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover for light mode */
+  }
+
+  .dark .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover for dark mode */
+  }
+
+  .theme-toggle svg {
+    /* SVGs retain their w-5 h-5 Tailwind classes for size.
+       The CSS below handles transition and absolute positioning. */
+    transition:
+      transform 0.5s ease,
+      opacity 0.3s ease;
+    position: absolute; /* Allows icons to overlap for smooth transition */
+  }
+
+  .theme-toggle .sun-icon {
+    opacity: 0; /* Start hidden in light mode (moon is visible) */
+    transform: scale(0.5) rotate(45deg);
+  }
+
+  .theme-toggle .moon-icon {
+    opacity: 1; /* Start visible in light mode */
+    transform: scale(1) rotate(0deg);
+  }
+
+  /* Styles when dark mode is active */
+  .dark .theme-toggle .sun-icon {
+    opacity: 1; /* Becomes visible in dark mode */
+    transform: scale(1) rotate(0deg);
+  }
+
+  .dark .theme-toggle .moon-icon {
+    opacity: 0; /* Becomes hidden in dark mode */
+    transform: scale(0.5) rotate(-45deg);
+  }
 </style>
