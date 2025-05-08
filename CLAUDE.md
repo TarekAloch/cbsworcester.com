@@ -13,6 +13,34 @@ The project is built with:
 - **TypeScript**: For type safety
 - **MDX**: For enhanced Markdown content
 
+## Recent Changes
+
+### Header and Navigation
+
+- Changed the sticky header background from `bg-primary-100` to `bg-white` in light mode to improve text readability
+- Improved the theme toggle button with smoother animations (added CSS classes and transitions)
+
+### Contact Modal
+
+- Added a contact modal system instead of navigating to sections
+- All "Contact Us" and "Schedule a Free Consultation" buttons now open the modal instead of linking to page sections
+- Modal includes proper form fields and animations
+- Added JavaScript to handle modal interactions with multiple trigger buttons using class-based selectors
+- Added CSS to ensure modal is properly centered with flex display
+- Added smooth transitions with proper durations (500ms) for opening/closing animations
+
+### Attribution and Footer
+
+- Moved the "Made by Tarek Aloch" credit from a separate Announcement component to the Footer component
+- Simplified display by separating the text and icon
+- Removed the GitHub link to focus only on the personal website link
+- Removed social links section from the Footer component
+- Fixed TypeScript errors by removing inline comments from HTML attributes
+
+### TypeScript Fixes
+
+- Fixed TypeScript warning in `src/utils/images.ts` by properly typing the `_image` variable
+
 ## Development Commands
 
 | Command                  | Description                              |
