@@ -56,13 +56,13 @@ const cbsCollectionRate = 97; // CBS average
       <div class="flex items-center">
         <button
           type="button"
-          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+          class="theme-toggle text-gray-500 dark:text-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 text-sm"
           aria-label="Toggle between Dark and Light mode"
           data-aw-toggle-color-scheme
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-sun dark:hidden w-5 h-5"
+            class="icon icon-tabler icon-tabler-sun sun-icon w-5 h-5"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ const cbsCollectionRate = 97; // CBS average
           </svg>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-moon hidden dark:inline-block w-5 h-5"
+            class="icon icon-tabler icon-tabler-moon moon-icon w-5 h-5"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -569,5 +569,61 @@ const cbsCollectionRate = 97; // CBS average
 
   .pulse-animation {
     animation: pulse 3s infinite;
+  }
+
+  /* Global body transition for theme change */
+  body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  /* Theme toggle button styling and animation */
+  .theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 40px;  /* Corresponds to w-10 or (icon w-5 + padding p-2.5 on each side) */
+    height: 40px; /* Corresponds to h-10 or (icon h-5 + padding p-2.5 on each side) */
+    border-radius: 50%; /* Circular button */
+    display: flex; /* This is now handled by CSS instead of Tailwind inline-flex */
+    align-items: center; /* This is now handled by CSS instead of Tailwind items-center */
+    justify-content: center;
+    position: relative; /* For positioning icons absolutely inside */
+    transition: background-color 0.3s ease; /* Transition for hover background */
+  }
+
+  .theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover for light mode */
+  }
+
+  .dark .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover for dark mode */
+  }
+
+  .theme-toggle svg {
+    /* SVGs retain their w-5 h-5 Tailwind classes for size.
+       The CSS below handles transition and absolute positioning. */
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    position: absolute; /* Allows icons to overlap for smooth transition */
+  }
+
+  .theme-toggle .sun-icon {
+    opacity: 0; /* Start hidden in light mode (moon is visible) */
+    transform: scale(0.5) rotate(45deg);
+  }
+
+  .theme-toggle .moon-icon {
+    opacity: 1; /* Start visible in light mode */
+    transform: scale(1) rotate(0deg);
+  }
+
+  /* Styles when dark mode is active */
+  .dark .theme-toggle .sun-icon {
+    opacity: 1; /* Becomes visible in dark mode */
+    transform: scale(1) rotate(0deg);
+  }
+
+  .dark .theme-toggle .moon-icon {
+    opacity: 0; /* Becomes hidden in dark mode */
+    transform: scale(0.5) rotate(-45deg);
   }
 </style>
