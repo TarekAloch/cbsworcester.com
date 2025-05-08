@@ -248,4 +248,14 @@
   }
 
   // No initial call needed - astro:page-load covers the first load.
+  
+  /* 
+  * NOTE: 2025-05-17: Modal View Transitions Fix
+  * This implementation fixes the modal functionality during Astro View Transitions by:
+  * 1. Moving all listener setup into the astro:page-load event
+  * 2. Using setupAllModalListeners() to manage all listeners with proper cleanup
+  * 3. Using direct element references that refresh on each page load
+  * 4. Properly handling event delegation for all modal interactions
+  * If issues recur with the modal after view transitions, check these event bindings first.
+  */
 </script>

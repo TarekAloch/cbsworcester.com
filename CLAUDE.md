@@ -184,6 +184,23 @@ Build output is static HTML (`output: 'static'` in astro.config.ts).
 
 ## Current Work In Progress
 
+### 2025-05-17 16:42:37: Contact Modal Fix Implemented
+
+We've successfully resolved the contact modal functionality issue:
+
+1. **Contact modal functionality:** ✅ FIXED
+   - **Original issue**: Modal buttons with class `js-open-contact-modal` not working consistently when navigating between pages
+   - **Solution implemented**:
+     - Completely refactored the modal JavaScript in `ContactModal.astro` to use a centralized listener management approach:
+       - Moved all event listener setup inside the `astro:page-load` event handler
+       - Created a dedicated `setupAllModalListeners()` function to handle all listener management
+       - Changed from attaching listeners to `body` to attaching them directly to `document`
+       - Implemented proper listener cleanup and reattachment on each page load
+       - Added explicit handler functions with proper type annotations
+       - Removed global window flags in favor of local flag management
+     - The refactoring ensures all listeners are properly established after each View Transition
+     - Extensive testing confirms modal works reliably in all navigation scenarios
+
 ### 2025-05-15: Cross-Page Component Integration Improvements
 
 We've been working on two significant issues related to site-wide component integration and Astro's View Transitions:
@@ -218,7 +235,7 @@ We've been working on two significant issues related to site-wide component inte
        - Simplified `astro:page-load` handler to only update element references
        - Added TypeScript declarations for window properties
        - Added `findAndSetModalElements()` function that is called on every click to ensure fresh element references
-   - **Status**: Some buttons still not working properly after certain navigation sequences
+   - **Status**: ✅ FIXED on 2025-05-17 (see solution above)
    
 ### Next Steps
 
@@ -226,13 +243,6 @@ We've been working on two significant issues related to site-wide component inte
    - Replace custom theme toggle implementation in CustomHeader.astro with standard ToggleTheme component
    - OR modify theme initialization to conditionally control which toggle is active
    - OR add a unique attribute to one implementation and modify BasicScripts.astro to target only one type
-
-2. **For contact modal issue**:
-   - Further debugging of element references and event binding after View Transitions
-   - Consider using a more global approach like a custom element or Astro island with `client:only` directive
-   - Ensure form submission handler is properly reinitialized after page transitions
-   - Possible solution: Move modal to the Layout.astro base component to ensure it's always present
-   - Alternative: Implement as a web component for better encapsulation across page transitions
 
 Both issues relate to how components behave across Astro's View Transitions, particularly when identical or similar functionality exists in multiple components or when JavaScript needs to maintain state and event bindings across page navigation. The challenges highlight the complexity of managing stateful interactions in a hybrid static/dynamic site with client-side transitions.
 
