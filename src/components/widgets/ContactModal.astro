@@ -1,0 +1,233 @@
+---
+// src/components/widgets/ContactModal.astro
+// No props needed for this basic version
+---
+
+{/* Contact Modal Start - HTML Structure */}
+<div
+  id="contact-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-60 p-4 transition-opacity duration-500 ease-in-out"
+  role="dialog"
+  aria-labelledby="contact-modal-title"
+  aria-modal="true"
+>
+  <div
+    class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-lg transform transition-all duration-500 ease-in-out scale-95 opacity-0"
+  >
+    {/* Modal Header */}
+    <div class="flex items-start justify-between mb-6">
+      <h2 id="contact-modal-title" class="text-2xl font-bold text-gray-900 dark:text-white">Contact Us</h2>
+      <button
+        id="close-contact-modal-button"
+        type="button"
+        class="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+        aria-label="Close contact form"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    {/* Modal Body - Form */}
+    <form id="contact-cbs-form" action="YOUR_FORM_SUBMISSION_ENDPOINT" method="POST">
+      {/* Replace YOUR_FORM_SUBMISSION_ENDPOINT later */}
+      <div class="space-y-5">
+        {/* Name Field */}
+        <div>
+          <label for="contact-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Your Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="contact-name"
+            required
+            class="mt-1 block w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-page dark:bg-slate-700 text-default dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
+            placeholder="John Doe"
+          />
+        </div>
+
+        {/* Email Field */}
+        <div>
+          <label for="contact-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Your Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="contact-email"
+            required
+            class="mt-1 block w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-page dark:bg-slate-700 text-default dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        {/* Message Field */}
+        <div>
+          <label for="contact-message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Message
+          </label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="4"
+            required
+            class="mt-1 block w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-page dark:bg-slate-700 text-default dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
+            placeholder="How can we help you?"></textarea>
+        </div>
+      </div>
+
+      {/* Modal Footer - Submit Button */}
+      <div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:brightness-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-slate-800 transition-colors duration-150"
+        >
+          Send Message
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{/* Contact Modal End */}
+
+{/* Modal CSS - Now scoped within the component */}
+<style>
+  /* Ensure modal container uses flex to center its content when visible */
+  /* Targeting the ID now needs :global as component styles are scoped */
+  :global(#contact-modal:not(.hidden)) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Add any other styles specific ONLY to the modal structure here */
+  /* Example: Input field styling overrides if needed */
+  :global(.bg-page) {
+    /* Example if needed */
+    /* background-color: var(--aw-color-bg-page); */
+  }
+</style>
+
+{/* Modal JavaScript - Now part of the component */}
+<script>
+  declare global {
+    interface Window {
+      __openModalListenerAttached?: boolean; // Declare our custom flag as optional boolean
+    }
+  }
+
+  // Define functions in a scope accessible by the event listeners
+  let modalElement: HTMLElement | null;
+  let modalContentElement: Element | null;
+
+  function openModal() {
+    if (!modalElement || !modalContentElement) {
+      console.warn('Attempted to open modal, but elements not initialized.');
+      return;
+    }
+
+    if (modalElement.classList.contains('hidden')) {
+      document.body.classList.add('overflow-hidden');
+      modalElement.classList.remove('hidden');
+      void modalElement.offsetWidth; // Force reflow
+      modalElement.classList.remove('opacity-0');
+      modalContentElement.classList.remove('opacity-0', 'scale-95');
+      modalContentElement.classList.add('opacity-100', 'scale-100');
+    }
+  }
+
+  function closeModal() {
+    if (!modalElement || !modalContentElement) {
+      console.warn('Attempted to close modal, but elements not initialized.');
+      return;
+    }
+
+    if (!modalElement.classList.contains('hidden')) {
+      document.body.classList.remove('overflow-hidden');
+      modalElement.classList.add('opacity-0');
+      modalContentElement.classList.add('opacity-0', 'scale-95');
+      modalContentElement.classList.remove('opacity-100', 'scale-100');
+
+      const transitionDuration = 500;
+      setTimeout(() => {
+        if (modalElement) modalElement.classList.add('hidden');
+      }, transitionDuration);
+    }
+  }
+
+  function handleEscKey(event: KeyboardEvent) {
+    if (event.key === 'Escape' && modalElement && !modalElement.classList.contains('hidden')) {
+      closeModal();
+    }
+  }
+
+  function closeModalOnOverlay(event: MouseEvent) {
+    const target = event.target; // Define target
+    // Check if modalElement is the direct target of the click (i.e., the overlay itself)
+    if (modalElement && target === modalElement) {
+      closeModal();
+    }
+  }
+
+  // This function will find elements and attach listeners that need to be on specific modal parts
+  function initializeModalInteractivity() {
+    modalElement = document.getElementById('contact-modal') as HTMLElement | null; // Added type assertion hint
+    modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
+    const closeModalButton = document.getElementById('close-contact-modal-button');
+
+    if (!modalElement || !modalContentElement || !closeModalButton) {
+      return;
+    }
+
+    // --- Attach listeners that are specific to the modal's internal elements ---
+    closeModalButton.removeEventListener('click', closeModal);
+    closeModalButton.addEventListener('click', closeModal);
+
+    modalElement.removeEventListener('click', closeModalOnOverlay);
+    modalElement.addEventListener('click', closeModalOnOverlay);
+
+    document.removeEventListener('keydown', handleEscKey);
+    document.addEventListener('keydown', handleEscKey);
+
+    console.log('Modal interactivity initialized.');
+  }
+
+  // --- Attach listeners that should only be set up ONCE and use event delegation ---
+  // Check a global flag to ensure this runs only once across the entire application lifecycle,
+  // even if the component script re-runs (which it might with client directives).
+  if (!window.__openModalListenerAttached) {
+    document.body.addEventListener('click', function (event: MouseEvent) {
+      // Added type for event
+      const target = event.target;
+      if (target && target instanceof Element) {
+        const openButton = target.closest('.js-open-contact-modal');
+        if (openButton) {
+          event.preventDefault();
+          if (!modalElement) {
+            // Re-check if modal is initialized if open is clicked early
+            initializeModalInteractivity();
+          }
+          openModal();
+        }
+      }
+    });
+    window.__openModalListenerAttached = true; // Set global flag
+    console.log('Delegated open modal listener attached to body.');
+  }
+
+  // Run initialization logic after Astro has loaded the page content for THIS component's script
+  // Note: This depends on the client:* directive used when importing this component.
+  // If using client:load or client:idle, this script runs early.
+  // If using client:visible, it runs when the (potentially invisible) modal enters viewport.
+  // 'astro:page-load' might still be relevant if the component *persists* across navigation.
+  // Let's stick to initializing when the script runs for the component.
+  initializeModalInteractivity();
+  // document.addEventListener('astro:page-load', initializeModalInteractivity); // Re-adding this might cause duplicate ESC/Overlay listeners if component persists
+
+  // Clean up listeners when the component is unloaded (Astro specific for islands)
+  // This is more advanced, but good practice if the component could truly unmount.
+  // For a modal always potentially available, maybe not strictly needed unless using client:visible.
+  // Example: return () => { document.removeEventListener('keydown', handleEscKey); } // Requires script setup context
+</script>
