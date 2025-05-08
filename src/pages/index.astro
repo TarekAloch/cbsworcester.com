@@ -573,7 +573,9 @@ const cbsCollectionRate = 97; // CBS average
 
   /* Global body transition for theme change */
   body {
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
   }
 
   /* Theme toggle button styling and animation */
@@ -581,7 +583,7 @@ const cbsCollectionRate = 97; // CBS average
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 40px;  /* Corresponds to w-10 or (icon w-5 + padding p-2.5 on each side) */
+    width: 40px; /* Corresponds to w-10 or (icon w-5 + padding p-2.5 on each side) */
     height: 40px; /* Corresponds to h-10 or (icon h-5 + padding p-2.5 on each side) */
     border-radius: 50%; /* Circular button */
     display: flex; /* This is now handled by CSS instead of Tailwind inline-flex */
@@ -602,7 +604,9 @@ const cbsCollectionRate = 97; // CBS average
   .theme-toggle svg {
     /* SVGs retain their w-5 h-5 Tailwind classes for size.
        The CSS below handles transition and absolute positioning. */
-    transition: transform 0.5s ease, opacity 0.3s ease;
+    transition:
+      transform 0.5s ease,
+      opacity 0.3s ease;
     position: absolute; /* Allows icons to overlap for smooth transition */
   }
 
