@@ -74,18 +74,19 @@ const { secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astr
     </div>
     <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
       {/* Item 1: Credit Line (Far Left) */}
-      <div class="mb-4 md:mb-0 flex items-center space-x-1"> {/* Added flex, items-center, space-x-1 */}
-        <span class="text-sm text-muted dark:text-slate-400">Made by Tarek Aloch</span> {/* Text is now separate */}
+      <div class="mb-4 md:mb-0 flex items-center space-x-1">
+        <span class="text-sm text-muted dark:text-slate-400">Made by Tarek Aloch</span>
         <a
           href="https://tarek.ai"
           target="_blank"
           rel="noopener"
-          class="text-primary dark:text-primary hover:opacity-75 dark:hover:opacity-75 transition-opacity duration-150" /* New classes for icon link */
+          class="text-primary dark:text-primary hover:opacity-75 dark:hover:opacity-75 transition-opacity duration-150"
           title="Visit Tarek's Website"
         >
+          {/* The SVG icon for the link */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-globe w-4 h-4" /* SVG classes remain */
+            class="icon icon-tabler icon-tabler-globe w-4 h-4"
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
