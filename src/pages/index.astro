@@ -599,76 +599,124 @@ const cbsCollectionRate = 97; // CBS average
   {/* Contact Modal End */}
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('contact-modal');
-      const modalContent = modal ? modal.querySelector('div[class*="bg-white"]') : null; // Targets the inner modal content box
-      const openModalButtons = document.querySelectorAll('.js-open-contact-modal'); // Changed to use class selector
-      const closeModalButton = document.getElementById('close-contact-modal-button');
+    // Define functions in a scope accessible by the event listeners
+    let modalElement: HTMLElement | null;
+    let modalContentElement: Element | null;
 
-      if (!modal || !modalContent || openModalButtons.length === 0 || !closeModalButton) {
-        console.warn('Modal elements or open modal buttons not found. Contact form interactivity will be affected.');
+    function openModal() {
+      // Re-query elements each time in case they were re-rendered, though modal itself should be persistent if on same page.
+      // However, good practice if this function could be called when elements might not be ready.
+      // For this specific modal on index.astro, they *should* be there if openModal is called.
+      if (!modalElement || !modalContentElement) {
+        console.warn('Attempted to open modal, but elements not initialized.');
         return;
       }
 
-      // Function to open the modal
-      function openModal() {
-        if (!modal || !modalContent) return; // Add type guard for TypeScript
+      if (modalElement.classList.contains('hidden')) {
+        document.body.classList.add('overflow-hidden');
+        modalElement.classList.remove('hidden');
+        void modalElement.offsetWidth; // Force reflow
+        modalElement.classList.remove('opacity-0');
+        modalContentElement.classList.remove('opacity-0', 'scale-95');
+        modalContentElement.classList.add('opacity-100', 'scale-100');
+      }
+    }
 
-        if (modal.classList.contains('hidden')) {
-          document.body.classList.add('overflow-hidden'); // Prevent background scrolling
-          modal.classList.remove('hidden');
-          // Force a reflow to ensure 'hidden' is removed before transitions start
-          void modal.offsetWidth;
-          modal.classList.remove('opacity-0'); // Fade in backdrop
-          modalContent.classList.remove('opacity-0', 'scale-95');
-          modalContent.classList.add('opacity-100', 'scale-100'); // Animate content
-        }
+    function closeModal() {
+      if (!modalElement || !modalContentElement) {
+        console.warn('Attempted to close modal, but elements not initialized.');
+        return;
       }
 
-      // Function to close the modal
-      function closeModal() {
-        if (!modal || !modalContent) return; // Add type guard for TypeScript
+      if (!modalElement.classList.contains('hidden')) {
+        document.body.classList.remove('overflow-hidden');
+        modalElement.classList.add('opacity-0');
+        modalContentElement.classList.add('opacity-0', 'scale-95');
+        modalContentElement.classList.remove('opacity-100', 'scale-100');
 
-        if (!modal.classList.contains('hidden')) {
-          document.body.classList.remove('overflow-hidden');
-          modal.classList.add('opacity-0'); // Fade out backdrop
-          modalContent.classList.add('opacity-0', 'scale-95');
-          modalContent.classList.remove('opacity-100', 'scale-100'); // Animate content
+        const transitionDuration = 500;
+        setTimeout(() => {
+          if (modalElement) modalElement.classList.add('hidden');
+        }, transitionDuration);
+      }
+    }
 
-          // Wait for the modal (backdrop) transition to finish before adding 'hidden'
-          // The modal itself has a transition duration of 500ms.
-          const transitionDuration = 500;
-          setTimeout(() => {
-            if (modal) modal.classList.add('hidden'); // Add null check for safety in setTimeout
-          }, transitionDuration);
-        }
+    function handleEscKey(event: KeyboardEvent) {
+      if (event.key === 'Escape' && modalElement && !modalElement.classList.contains('hidden')) {
+        closeModal();
+      }
+    }
+
+    function closeModalOnOverlay(event: MouseEvent) {
+      // Check if modalElement is the direct target of the click (i.e., the overlay itself)
+      if (modalElement && event.target === modalElement) {
+        closeModal();
+      }
+    }
+
+    // This function will find elements and attach listeners that need to be on specific modal parts
+    function initializeModalInteractivity() {
+      modalElement = document.getElementById('contact-modal');
+      modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
+      const closeModalButton = document.getElementById('close-contact-modal-button');
+
+      if (!modalElement || !modalContentElement || !closeModalButton) {
+        // console.warn('Modal elements not found on this page load. Contact form interactivity might be affected.');
+        // If elements aren't found, listeners won't be attached, which is correct for other pages.
+        return;
       }
 
-      // Event Listeners
-      openModalButtons.forEach((button) => {
-        // Added loop for multiple buttons
-        button.addEventListener('click', (event) => {
-          event.preventDefault(); // Prevent default anchor behavior
-          openModal();
-        });
-      });
-
+      // --- Attach listeners that are specific to the modal's internal elements ---
+      // Remove existing listeners to prevent duplicates if astro:page-load fires multiple times unexpectedly (should not happen for same page)
+      closeModalButton.removeEventListener('click', closeModal);
       closeModalButton.addEventListener('click', closeModal);
 
-      // Close modal on overlay click
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-          closeModal();
-        }
-      });
+      modalElement.removeEventListener('click', closeModalOnOverlay);
+      modalElement.addEventListener('click', closeModalOnOverlay);
 
-      // Close modal on Escape key press
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
-          closeModal();
+      // The ESC key listener is global, so we only want to add it once, or manage it.
+      // For simplicity, if it might be added multiple times by astro:page-load, ensure it's managed.
+      // A simple approach is to remove it before adding.
+      document.removeEventListener('keydown', handleEscKey);
+      document.addEventListener('keydown', handleEscKey);
+
+      console.log('Modal interactivity initialized.');
+    }
+
+    // --- Attach listeners that should only be set up ONCE and use event delegation ---
+    // This delegated listener for opening the modal is attached to the body once.
+    // It needs to be outside the astro:page-load if we don't want it re-attached.
+    // Or, ensure the astro:page-load handler is idempotent for this part.
+    let openModalListenerAttached = false;
+    if (!openModalListenerAttached) {
+      document.body.addEventListener('click', function (event) {
+        const target = event.target;
+        if (target && target instanceof Element) {
+          const openButton = target.closest('.js-open-contact-modal');
+          if (openButton) {
+            event.preventDefault();
+            // It's crucial that modalElement and modalContentElement are up-to-date here.
+            // If initializeModalInteractivity() hasn't run yet on this "page", these might be null.
+            // One option: ensure initializeModalInteractivity has run.
+            if (!modalElement) {
+              // If elements haven't been grabbed by initializeModal yet
+              initializeModalInteractivity(); // Try to grab them now
+            }
+            openModal(); // Then try to open
+          }
         }
       });
-    });
+      openModalListenerAttached = true;
+      console.log('Delegated open modal listener attached to body.');
+    }
+
+    // Run initialization logic after Astro has loaded the page content
+    document.addEventListener('astro:page-load', initializeModalInteractivity);
+
+    // For the very first load, astro:page-load should also fire.
+    // If there's any doubt, uncommenting the line below would ensure setup on initial direct load,
+    // but it's generally best to rely on astro:page-load for consistency.
+    // initializeModalInteractivity();
   </script>
 </Layout>
 
