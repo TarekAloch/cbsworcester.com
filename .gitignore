@@ -66,3 +66,7 @@ temp_widgets_txt/
 *.code-workspace
 
 **/CLAUDE.local.md
+
+# Claude-specific files
+.claude/
+claude.init
