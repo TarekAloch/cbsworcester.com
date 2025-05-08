@@ -77,8 +77,9 @@
         </div>
       </div>
 
-      {/* Modal Footer - Submit Button */}
-      <div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+      {/* Modal Footer - Submit Button and Status */}
+      <div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-700 flex justify-end items-center">
+        <div id="form-status" class="text-sm mr-auto"></div>
         <button
           type="submit"
           class="inline-flex justify-center py-2.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:brightness-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-slate-800 transition-colors duration-150"
@@ -120,6 +121,68 @@
   // Define functions in a scope accessible by the event listeners
   let modalElement: HTMLElement | null;
   let modalContentElement: Element | null;
+
+  // --- Form submission handler ---
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault(); // Stop default form submission
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const statusDiv = document.getElementById('form-status');
+    const submitButton = form.querySelector('button[type=submit]') as HTMLButtonElement | null;
+
+    if (!statusDiv || !submitButton) return;
+
+    // Show loading state
+    const originalButtonText = submitButton.innerHTML;
+    submitButton.disabled = true;
+    submitButton.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Sending...`;
+    statusDiv.textContent = ''; // Clear previous status
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          Accept: 'application/json', // Important for Formspree AJAX
+        },
+      });
+
+      if (response.ok) {
+        // Success
+        statusDiv.textContent = 'Message sent successfully!';
+        statusDiv.className = 'text-sm mr-auto text-green-600 dark:text-green-400'; // Success styling
+        form.reset(); // Clear form fields
+        submitButton.disabled = false; // Re-enable button immediately after reset
+        submitButton.innerHTML = originalButtonText; // Restore button text
+        // Optionally close modal after a short delay
+        // setTimeout(closeModal, 2000);
+      } else {
+        // Handle server errors (e.g., Formspree validation errors)
+        const data = await response.json();
+        if (Object.hasOwn(data, 'errors')) {
+          statusDiv.textContent = data['errors'].map((error: { message: string }) => error.message).join(', ');
+        } else {
+          statusDiv.textContent = 'Oops! There was a problem submitting your form.';
+        }
+        statusDiv.className = 'text-sm mr-auto text-red-600 dark:text-red-400'; // Error styling
+        submitButton.disabled = false; // Re-enable button
+        submitButton.innerHTML = originalButtonText; // Restore button text
+      }
+    } catch (error) {
+      console.error('Form submission network error:', error); // Log the error
+      // Handle network errors
+      statusDiv.textContent = 'Oops! There was a network error.';
+      statusDiv.className = 'text-sm mr-auto text-red-600 dark:text-red-400'; // Error styling
+      submitButton.disabled = false; // Re-enable button
+      submitButton.innerHTML = originalButtonText; // Restore button text
+    }
+  }
 
   function openModal() {
     if (!modalElement || !modalContentElement) {
@@ -176,7 +239,12 @@
     modalContentElement = modalElement ? modalElement.querySelector('div[class*="bg-white"]') : null;
     const closeModalButton = document.getElementById('close-contact-modal-button');
 
-    if (!modalElement || !modalContentElement || !closeModalButton) {
+    const form = document.getElementById('contact-cbs-form') as HTMLFormElement | null; // Get form
+    const formStatus = document.getElementById('form-status'); // Get status div
+    const submitButton = form ? form.querySelector('button[type=submit]') : null; // Get submit button
+
+    if (!modalElement || !modalContentElement || !closeModalButton || !form || !formStatus || !submitButton) {
+      console.warn('Modal elements or form elements not found. Interactivity might be affected.');
       return;
     }
 
@@ -190,7 +258,11 @@
     document.removeEventListener('keydown', handleEscKey);
     document.addEventListener('keydown', handleEscKey);
 
-    console.log('Modal interactivity initialized.');
+    // Attach AJAX submit listener
+    form.removeEventListener('submit', handleSubmit); // Prevent duplicates
+    form.addEventListener('submit', handleSubmit);
+
+    console.log('Modal interactivity initialized, including AJAX form handler.');
   }
 
   // --- Attach listeners that should only be set up ONCE and use event delegation ---
