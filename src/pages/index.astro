@@ -345,7 +345,6 @@ const cbsCollectionRate = 97; // CBS average
     </div>
   </div>
 
-
   <!-- Testimonials Section with Improved Design -->
   <div class="cbs-section relative overflow-hidden">
     <!-- Background elements -->
@@ -443,7 +442,7 @@ const cbsCollectionRate = 97; // CBS average
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
               <path d="M3 7l9 6l9 -6"></path>
             </svg>
@@ -500,17 +499,17 @@ const cbsCollectionRate = 97; // CBS average
   {/* Contact Modal Start */}
   <div
     id="contact-modal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-60 p-4 transition-opacity duration-300 ease-in-out"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-60 p-4 transition-opacity duration-500 ease-in-out"
     role="dialog"
     aria-labelledby="contact-modal-title"
     aria-modal="true"
   >
-    <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-lg transform transition-all duration-300 ease-in-out scale-95 opacity-0">
+    <div
+      class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-lg transform transition-all duration-500 ease-in-out scale-95 opacity-0"
+    >
       {/* Modal Header */}
       <div class="flex items-start justify-between mb-6">
-        <h2 id="contact-modal-title" class="text-2xl font-bold text-gray-900 dark:text-white">
-          Contact Us
-        </h2>
+        <h2 id="contact-modal-title" class="text-2xl font-bold text-gray-900 dark:text-white">Contact Us</h2>
         <button
           id="close-contact-modal-button"
           type="button"
@@ -524,7 +523,8 @@ const cbsCollectionRate = 97; // CBS average
       </div>
 
       {/* Modal Body - Form */}
-      <form id="contact-cbs-form" action="YOUR_FORM_SUBMISSION_ENDPOINT" method="POST"> {/* Replace YOUR_FORM_SUBMISSION_ENDPOINT later */}
+      <form id="contact-cbs-form" action="YOUR_FORM_SUBMISSION_ENDPOINT" method="POST">
+        {/* Replace YOUR_FORM_SUBMISSION_ENDPOINT later */}
         <div class="space-y-5">
           {/* Name Field */}
           <div>
@@ -567,8 +567,7 @@ const cbsCollectionRate = 97; // CBS average
               rows="4"
               required
               class="mt-1 block w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-page dark:bg-slate-700 text-default dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
-              placeholder="How can we help you?"
-            ></textarea>
+              placeholder="How can we help you?"></textarea>
           </div>
         </div>
 
@@ -600,11 +599,13 @@ const cbsCollectionRate = 97; // CBS average
 
       // Function to open the modal
       function openModal() {
+        if (!modal || !modalContent) return; // Add type guard for TypeScript
+
         if (modal.classList.contains('hidden')) {
           document.body.classList.add('overflow-hidden'); // Prevent background scrolling
           modal.classList.remove('hidden');
           // Force a reflow to ensure 'hidden' is removed before transitions start
-          void modal.offsetWidth; 
+          void modal.offsetWidth;
           modal.classList.remove('opacity-0'); // Fade in backdrop
           modalContent.classList.remove('opacity-0', 'scale-95');
           modalContent.classList.add('opacity-100', 'scale-100'); // Animate content
@@ -613,6 +614,8 @@ const cbsCollectionRate = 97; // CBS average
 
       // Function to close the modal
       function closeModal() {
+        if (!modal || !modalContent) return; // Add type guard for TypeScript
+
         if (!modal.classList.contains('hidden')) {
           document.body.classList.remove('overflow-hidden');
           modal.classList.add('opacity-0'); // Fade out backdrop
@@ -620,10 +623,10 @@ const cbsCollectionRate = 97; // CBS average
           modalContent.classList.remove('opacity-100', 'scale-100'); // Animate content
 
           // Wait for the modal (backdrop) transition to finish before adding 'hidden'
-          // The modal itself has a transition duration of 300ms.
-          const transitionDuration = 300; 
+          // The modal itself has a transition duration of 500ms.
+          const transitionDuration = 500;
           setTimeout(() => {
-            modal.classList.add('hidden');
+            if (modal) modal.classList.add('hidden'); // Add null check for safety in setTimeout
           }, transitionDuration);
         }
       }
