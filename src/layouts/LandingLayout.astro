@@ -13,9 +13,7 @@ const { metadata } = Astro.props;
 ---
 
 <PageLayout metadata={metadata}>
-  <Fragment slot="announcement">
-    <slot name="announcement" />
-  </Fragment>
+  <!-- Announcement slot removed as it's no longer needed -->
   <Fragment slot="header">
     <slot name="header">
       <Header

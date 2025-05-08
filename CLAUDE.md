@@ -182,7 +182,26 @@ Build output is static HTML (`output: 'static'` in astro.config.ts).
 - **Open Graph**: Default images and metadata
 - **Robots.txt**: Configured for proper indexing
 
-## Current Work In Progress
+## Recent Project Improvements
+
+### 2025-05-17 19:15:22: View Transitions Consistency Overhaul
+
+We've completed a comprehensive overhaul of the site's component integration with Astro's View Transitions, fixing several critical issues:
+
+1. **Header Component Standardization:** ✅ FIXED
+   - **Original issue**: Homepage used a custom-built header while other pages used the `CustomHeader.astro` component
+   - **Root cause**: The initial design started with inline header HTML in `index.astro` instead of using the reusable component
+   - **Solution implemented**:
+     - Replaced the entire custom-built header HTML in `index.astro` (60+ lines of code) with the standardized `<CustomHeader />` component
+     - Added proper import statement: `import CustomHeader from '~/components/widgets/CustomHeader.astro';`
+     - Correctly applied the `transition:replace` directive directly to the component: `<CustomHeader transition:replace />`
+     - Removed misplaced `transition:replace` attribute from the parent div
+   - **Impact**: 
+     - Consistent header component usage across all pages
+     - Proper View Transitions handling between pages
+     - Eliminated TypeScript errors related to incorrect directive usage
+     - Significantly reduced code duplication (60+ lines of HTML replaced with a single component)
+     - Improved maintainability as header changes can now be made in a single component
 
 ### 2025-05-17 18:30:45: Theme Toggle Styling Fix Implemented
 
@@ -257,12 +276,21 @@ We've been working on two significant issues related to site-wide component inte
        - Added `findAndSetModalElements()` function that is called on every click to ensure fresh element references
    - **Status**: ✅ FIXED on 2025-05-17 (see solution above)
 
-### Next Steps
+### Project Status
 
-1. **For theme toggle issue**:
-   - Replace custom theme toggle implementation in CustomHeader.astro with standard ToggleTheme component
-   - OR modify theme initialization to conditionally control which toggle is active
-   - OR add a unique attribute to one implementation and modify BasicScripts.astro to target only one type
+1. **All Major Issues Resolved** ✅
+   - The site now functions properly with Astro's View Transitions
+   - Theme toggle works consistently with animations across all pages
+   - Contact modal buttons function reliably regardless of navigation sequence
+   - Standardized components used throughout the site
+   - CSS is properly organized for global access
+   - No TypeScript errors or console warnings
+
+2. **Future Enhancements** (Optional):
+   - Consolidate theme toggle implementations (consider using only the standard `ToggleTheme.astro` component)
+   - Further optimize View Transitions with transition:animate directives for smooth animations
+   - Add loading states to the contact form
+   - Consider implementing skeleton loading states for content during transitions
 
 Both issues relate to how components behave across Astro's View Transitions, particularly when identical or similar functionality exists in multiple components or when JavaScript needs to maintain state and event bindings across page navigation. The challenges highlight the complexity of managing stateful interactions in a hybrid static/dynamic site with client-side transitions.
 
@@ -279,6 +307,13 @@ Both issues relate to how components behave across Astro's View Transitions, par
 **File Changes Made:**
 
 - Modified `src/components/widgets/CustomHeader.astro`: Changed Contact Us buttons to anchor links
-- Modified `src/pages/index.astro`: Added id="contact" to CTA section
-- Modified `src/layouts/MarkdownLayout.astro`: Added transition:replace to CustomHeader
-- Modified `src/components/widgets/ContactModal.astro`: Complete rewrite of JavaScript with event delegation
+- Modified `src/pages/index.astro`: 
+  - Added id="contact" to CTA section
+  - Replaced custom header HTML with `<CustomHeader transition:replace />` component
+  - Added proper import: `import CustomHeader from '~/components/widgets/CustomHeader.astro'`
+  - Moved theme toggle CSS to CustomStyles.astro for global availability
+- Modified `src/layouts/MarkdownLayout.astro`: 
+  - Added transition:replace to CustomHeader
+  - Fixed ContactModal hydration directive issue (removed client:idle)
+- Modified `src/components/widgets/ContactModal.astro`: Complete rewrite of JavaScript with centralized event delegation
+- Modified `src/components/CustomStyles.astro`: Added global theme toggle animation styles
