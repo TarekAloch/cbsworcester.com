@@ -125,7 +125,13 @@ const cbsCollectionRate = 97; // CBS average
         title="<span class='text-6xl md:text-7xl font-extrabold text-primary'>96-98%</span> Collection Rate for Mental Health Providers"
         subtitle="Complete Billing Solutions: Specialized Medical Billing Services Since 2000."
         tagline="Over 25 Years of Dedicated Service"
-        callToAction={{ text: 'Schedule a Free Consultation', href: 'javascript:void(0);', icon: 'tabler:calendar-time', class: 'js-open-contact-modal bg-accent text-primary font-bold text-base px-6 py-3 rounded-md shadow-md hover:bg-yellow-500 hover:shadow-lg dark:bg-secondary dark:text-white dark:hover:bg-sky-500 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 hover:ring-2 hover:ring-accent hover:ring-offset-2 hover:ring-offset-bg-page focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-page' }}
+        callToAction={{
+          text: 'Schedule a Free Consultation',
+          href: 'javascript:void(0);',
+          icon: 'tabler:calendar-time',
+          class:
+            'js-open-contact-modal bg-accent text-primary font-bold text-base px-6 py-3 rounded-md shadow-md hover:bg-yellow-500 hover:shadow-lg dark:bg-secondary dark:text-white dark:hover:bg-sky-500 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 hover:ring-2 hover:ring-accent hover:ring-offset-2 hover:ring-offset-bg-page focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-page',
+        }}
         callToAction2={{ text: 'Learn About Our Services', href: '#features', icon: 'tabler:info-circle' }}
       />
     </div>
@@ -430,7 +436,7 @@ const cbsCollectionRate = 97; // CBS average
           <a
             href="javascript:void(0);"
             id="open-contact-modal-button"
-            class="inline-flex items-center justify-center bg-primary hover:brightness-90 text-white font-semibold px-6 py-3 rounded-md transition duration-300 shadow-md"
+            class="js-open-contact-modal inline-flex items-center justify-center bg-primary hover:brightness-90 text-white font-semibold px-6 py-3 rounded-md transition duration-300 shadow-md"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -589,11 +595,11 @@ const cbsCollectionRate = 97; // CBS average
     document.addEventListener('DOMContentLoaded', () => {
       const modal = document.getElementById('contact-modal');
       const modalContent = modal ? modal.querySelector('div[class*="bg-white"]') : null; // Targets the inner modal content box
-      const openModalButton = document.getElementById('open-contact-modal-button');
+      const openModalButtons = document.querySelectorAll('.js-open-contact-modal'); // Changed to use class selector
       const closeModalButton = document.getElementById('close-contact-modal-button');
 
-      if (!modal || !modalContent || !openModalButton || !closeModalButton) {
-        console.warn('Modal elements not found. Contact form interactivity will be affected.');
+      if (!modal || !modalContent || openModalButtons.length === 0 || !closeModalButton) {
+        console.warn('Modal elements or open modal buttons not found. Contact form interactivity will be affected.');
         return;
       }
 
@@ -632,9 +638,12 @@ const cbsCollectionRate = 97; // CBS average
       }
 
       // Event Listeners
-      openModalButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default anchor behavior
-        openModal();
+      openModalButtons.forEach((button) => {
+        // Added loop for multiple buttons
+        button.addEventListener('click', (event) => {
+          event.preventDefault(); // Prevent default anchor behavior
+          openModal();
+        });
       });
 
       closeModalButton.addEventListener('click', closeModal);
