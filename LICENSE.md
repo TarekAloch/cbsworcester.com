@@ -1,6 +1,11 @@
 MIT License
 
-Copyright (c) 2023 onWidget
+Portions Copyright (c) 2023 onWidget
+  AstroWind template — https://github.com/onwidget/astrowind
+
+Portions Copyright (c) 2025 Tarek Aloch
+  Complete Billing Solutions website (derivative work)
+  https://github.com/TarekAloch/cbsworcester.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
