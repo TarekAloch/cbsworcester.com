@@ -69,3 +69,6 @@ temp_widgets_txt/
 # Claude-specific files
 .claude/
 claude.init
+
+# Local-only handoff notes (never publish to GitHub)
+.handoffs/
